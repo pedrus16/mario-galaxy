@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://inqk8m6akxsk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bt3en"]
+radius = 48.0
+
+[node name="RigidBody2D2" type="RigidBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bt3en")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(-48, 0, -34, -33, 0, -48, 34, -34, 48, 0, 34, 34, 0, 48, -34, 34)

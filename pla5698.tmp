@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dw2qmdtemubuo"]
+
+[ext_resource type="Script" path="res://planet.gd" id="1_0nmii"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_llq7i"]
+radius = 876.069
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lqkyp"]
+radius = 500.0
+
+[node name="Planet" type="Node2D" groups=["planet"]]
+script = ExtResource("1_0nmii")
+
+[node name="AreaOfInfluence" type="Area2D" parent="."]
+gravity_space_override = 1
+gravity_point = true
+gravity_point_center = Vector2(0, 0)
+gravity_direction = Vector2(0, 0)
+gravity = 10.0
+
+[node name="Collision" type="CollisionShape2D" parent="AreaOfInfluence"]
+shape = SubResource("CircleShape2D_llq7i")
+
+[node name="Body" type="AnimatableBody2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+shape = SubResource("CircleShape2D_lqkyp")
+
+[connection signal="body_entered" from="AreaOfInfluence" to="." method="_on_area_of_influence_body_entered"]
+[connection signal="body_exited" from="AreaOfInfluence" to="." method="_on_area_of_influence_body_exited"]

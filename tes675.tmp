@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://btfdohv5uyusv"]
+
+[ext_resource type="PackedScene" uid="uid://dw2qmdtemubuo" path="res://planet.tscn" id="1_vorvx"]
+[ext_resource type="PackedScene" uid="uid://cgc5cxqhsp066" path="res://player.tscn" id="2_wihey"]
+[ext_resource type="PackedScene" uid="uid://inqk8m6akxsk" path="res://rock.tscn" id="3_n33gi"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_eqhbf"]
+
+[node name="Test" type="Node2D"]
+
+[node name="Planet" parent="." instance=ExtResource("1_vorvx")]
+
+[node name="Player" parent="." instance=ExtResource("2_wihey")]
+position = Vector2(-32, -648)
+
+[node name="RigidBody2D2" parent="." instance=ExtResource("3_n33gi")]
+position = Vector2(32, -648)
+physics_material_override = SubResource("PhysicsMaterial_eqhbf")
+
+[node name="RigidBody2D3" parent="." instance=ExtResource("3_n33gi")]
+position = Vector2(-42, -516)
+physics_material_override = SubResource("PhysicsMaterial_eqhbf")
+
+[node name="RigidBody2D4" parent="." instance=ExtResource("3_n33gi")]
+position = Vector2(57, -523)
+physics_material_override = SubResource("PhysicsMaterial_eqhbf")
+
+[node name="RigidBody2D5" parent="." instance=ExtResource("3_n33gi")]
+position = Vector2(75, -561)
+physics_material_override = SubResource("PhysicsMaterial_eqhbf")
+
+[node name="Player2" parent="." instance=ExtResource("2_wihey")]
+position = Vector2(-366, -526)
+
+[node name="RigidBody2D6" parent="." instance=ExtResource("3_n33gi")]
+position = Vector2(-274, -438)
+physics_material_override = SubResource("PhysicsMaterial_eqhbf")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-66, -395)
+ignore_rotation = false
+position_smoothing_enabled = true
