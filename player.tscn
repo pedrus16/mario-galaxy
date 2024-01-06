@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://player.gd" id="1_4o72w"]
 [ext_resource type="Texture2D" uid="uid://bluy0ovcoa4hq" path="res://assets/cosmonaut.png" id="1_vhrl3"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_k3vur"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_1shqn"]
 radius = 48.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
@@ -14,6 +14,11 @@ script = ExtResource("1_4o72w")
 texture_filter = 1
 scale = Vector2(3, 3)
 texture = ExtResource("1_vhrl3")
+offset = Vector2(1.855, 0)
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_k3vur")
+shape = SubResource("CircleShape2D_1shqn")
+
+[node name="Polygon2D" type="Polygon2D" parent="Collision"]
+color = Color(0, 1, 1, 0.231373)
+polygon = PackedVector2Array(0, -48, 13, -46, 24, -41, 34, -34, 42, -24, 46, -12, 48, 0, 46, 12, 42, 22, 35, 33, 24, 41, 12, 46, 0, 48, -14, 46, -24, 41, -33, 34, -41, 25, -47, 13, -48, 0, -46, -12, -41, -24, -33, -34, -24, -41, -12, -46)

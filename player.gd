@@ -33,6 +33,7 @@ func _physics_process(delta):
 		_velocity += gravity * delta
 		
 		set_up_direction(-gravity_direction)
+		$Collision.rotation = up_direction.angle() + PI / 2
 		
 		# Walk
 		if is_on_floor():
