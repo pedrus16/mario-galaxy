@@ -8,12 +8,18 @@ var planets = []
 var direction = 0
 var jumping = false
 
+@onready var camera = $Camera2D
+
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if not is_multiplayer_authority():
+		return
+		
 	planets = get_tree().get_nodes_in_group("planet")
+	camera.make_current()
 	
 #func _process(_delta):
 	#if $Camera2D:
@@ -21,6 +27,7 @@ func _ready():
 		
 func _physics_process(delta):
 	$Sprite2D.rotation = get_up_direction().angle() + PI / 2
+	camera.rotation = get_up_direction().angle() + PI / 2
 	direction = 0
 	
 	if is_multiplayer_authority():

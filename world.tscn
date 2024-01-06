@@ -31,11 +31,6 @@ physics_material_override = SubResource("PhysicsMaterial_eqhbf")
 position = Vector2(-504, -579)
 physics_material_override = SubResource("PhysicsMaterial_eqhbf")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(25, -702)
-ignore_rotation = false
-zoom = Vector2(0.333, 0.333)
-
 [node name="Spawn" type="Marker2D" parent="."]
 position = Vector2(-76, -258)
 
