@@ -40,8 +40,12 @@ func _draw():
 func get_gravity_at(point: Vector2):
 	var center = $GravityArea.position + $GravityArea.gravity_point_center
 	var direction = point.direction_to(center).normalized()
-	var _gravity = $GravityArea.gravity / point.distance_squared_to(center) * $GravityArea.gravity_point_unit_distance ** 2
 	
-	#print("dist:", point.distance_to(center), " gravity:", gravity)
+ 	# Set arbitrary direction if the point is exactly at center of gravity
+	if direction.is_zero_approx():
+		direction = Vector2(0, 1)
+	
+	var distance_squared = max(0.0001, point.distance_squared_to(center))
+	var _gravity = $GravityArea.gravity / distance_squared * $GravityArea.gravity_point_unit_distance ** 2
 	
 	return direction * _gravity

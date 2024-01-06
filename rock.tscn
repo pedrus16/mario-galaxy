@@ -1,7 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://inqk8m6akxsk"]
+[gd_scene load_steps=3 format=3 uid="uid://inqk8m6akxsk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bt3en"]
 radius = 48.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_hxunp"]
+properties/0/path = NodePath(".:linear_velocity")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:angular_velocity")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:position")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
 [node name="RigidBody2D2" type="RigidBody2D"]
 
@@ -11,3 +25,6 @@ shape = SubResource("CircleShape2D_bt3en")
 [node name="Polygon2D" type="Polygon2D" parent="."]
 color = Color(1, 0, 0, 1)
 polygon = PackedVector2Array(-48, 0, -34, -33, 0, -48, 34, -34, 48, 0, 34, 34, 0, 48, -34, 34)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_hxunp")

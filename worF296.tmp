@@ -12,32 +12,32 @@ radius = 5.0
 influence_height = 1264.9
 
 [node name="RigidBody2D2" parent="." instance=ExtResource("3_n33gi")]
-position = Vector2(77, -796)
+position = Vector2(145, -683)
 physics_material_override = SubResource("PhysicsMaterial_eqhbf")
 
 [node name="RigidBody2D3" parent="." instance=ExtResource("3_n33gi")]
-position = Vector2(410, -595)
+position = Vector2(478, -482)
 physics_material_override = SubResource("PhysicsMaterial_eqhbf")
 
 [node name="RigidBody2D4" parent="." instance=ExtResource("3_n33gi")]
-position = Vector2(569, -377)
+position = Vector2(637, -264)
 physics_material_override = SubResource("PhysicsMaterial_eqhbf")
 
 [node name="RigidBody2D5" parent="." instance=ExtResource("3_n33gi")]
-position = Vector2(413, -441)
+position = Vector2(481, -328)
 physics_material_override = SubResource("PhysicsMaterial_eqhbf")
 
 [node name="RigidBody2D6" parent="." instance=ExtResource("3_n33gi")]
-position = Vector2(-504, -579)
+position = Vector2(-436, -466)
 physics_material_override = SubResource("PhysicsMaterial_eqhbf")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(25, -702)
+position = Vector2(-5, -733)
 ignore_rotation = false
 zoom = Vector2(0.333, 0.333)
 
 [node name="Spawn" type="Marker2D" parent="."]
-position = Vector2(-76, -258)
+position = Vector2(0, -1051)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://player.tscn")
