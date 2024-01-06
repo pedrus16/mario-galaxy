@@ -12,18 +12,19 @@ var jumping = false
 func _ready():
 	planets = get_tree().get_nodes_in_group("planet")
 	
-func _process(_delta):
-	if $Camera2D:
-		$Camera2D.rotation = up_direction.angle() + PI / 2
+#func _process(_delta):
+	#if $Camera2D:
+		#$Camera2D.rotation = up_direction.angle() + PI / 2
 		
 func _physics_process(delta):
 	$Sprite2D.rotation = get_up_direction().angle() + PI / 2
 	
 	direction = 0
-	if Input.is_action_pressed("walk_left"):
-		direction += -1
-	if Input.is_action_pressed("walk_right"):
-		direction += 1
+	if is_multiplayer_authority():
+		if Input.is_action_pressed("walk_left"):
+			direction += -1
+		if Input.is_action_pressed("walk_right"):
+			direction += 1
 	
 	var _velocity = get_real_velocity()
 	for planet in planets:
@@ -41,7 +42,7 @@ func _physics_process(delta):
 			_velocity = move_dir * move_speed
 		
 		# Jump
-		if Input.is_action_just_pressed("jump") && is_on_floor():
+		if is_multiplayer_authority() and Input.is_action_just_pressed("jump") and is_on_floor():
 			jumping = true
 			_velocity += up_direction * jump_speed
 		

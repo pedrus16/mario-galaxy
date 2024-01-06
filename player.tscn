@@ -1,10 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://cgc5cxqhsp066"]
+[gd_scene load_steps=5 format=3 uid="uid://cgc5cxqhsp066"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_4o72w"]
 [ext_resource type="Texture2D" uid="uid://bluy0ovcoa4hq" path="res://assets/cosmonaut.png" id="1_vhrl3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1shqn"]
 radius = 48.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1uu38"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:up_direction")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Sprite2D:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 floor_snap_length = 10.0
@@ -22,3 +33,6 @@ shape = SubResource("CircleShape2D_1shqn")
 [node name="Polygon2D" type="Polygon2D" parent="Collision"]
 color = Color(0, 1, 1, 0.231373)
 polygon = PackedVector2Array(0, -48, 13, -46, 24, -41, 34, -34, 42, -24, 46, -12, 48, 0, 46, 12, 42, 22, 35, 33, 24, 41, 12, 46, 0, 48, -14, 46, -24, 41, -33, 34, -41, 25, -47, 13, -48, 0, -46, -12, -41, -24, -33, -34, -24, -41, -12, -46)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_1uu38")

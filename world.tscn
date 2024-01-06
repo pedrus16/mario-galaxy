@@ -1,24 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://btfdohv5uyusv"]
+[gd_scene load_steps=4 format=3 uid="uid://btfdohv5uyusv"]
 
 [ext_resource type="PackedScene" uid="uid://dw2qmdtemubuo" path="res://planet.tscn" id="1_vorvx"]
-[ext_resource type="PackedScene" uid="uid://cgc5cxqhsp066" path="res://player.tscn" id="2_wihey"]
 [ext_resource type="PackedScene" uid="uid://inqk8m6akxsk" path="res://rock.tscn" id="3_n33gi"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_eqhbf"]
 
-[node name="Test" type="Node2D"]
+[node name="World" type="Node2D"]
 
 [node name="Planet" parent="." instance=ExtResource("1_vorvx")]
 radius = 5.0
 influence_height = 1264.9
-
-[node name="Player" parent="." instance=ExtResource("2_wihey")]
-position = Vector2(-5, -683)
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(0, -50)
-ignore_rotation = false
-zoom = Vector2(0.333, 0.333)
 
 [node name="RigidBody2D2" parent="." instance=ExtResource("3_n33gi")]
 position = Vector2(145, -683)
@@ -39,3 +30,11 @@ physics_material_override = SubResource("PhysicsMaterial_eqhbf")
 [node name="RigidBody2D6" parent="." instance=ExtResource("3_n33gi")]
 position = Vector2(-436, -466)
 physics_material_override = SubResource("PhysicsMaterial_eqhbf")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-5, -733)
+ignore_rotation = false
+zoom = Vector2(0.333, 0.333)
+
+[node name="Spawn" type="Marker2D" parent="."]
+position = Vector2(0, -1051)
