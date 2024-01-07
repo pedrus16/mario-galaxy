@@ -62,13 +62,11 @@ func get_gravity_at(point: Vector2) -> Vector2:
 	return direction * _gravity
 
 func _on_influence_area_body_entered(body):
-	print("ENTER ", body is Player)
 	if body is Player:
 		body.current_planet = self
 
 
 func _on_influence_area_body_exited(body):
-	print("EXIT ", body is Player)
 	if body is Player:
 		body.current_planet = null
 	
