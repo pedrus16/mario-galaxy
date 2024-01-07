@@ -43,12 +43,9 @@ func _refresh_children_proprerties():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if not $GravityArea/Collision.shape:
-		$GravityArea/Collision.shape = CircleShape2D.new()
-	if not $Body/Collision.shape:
-		$Body/Collision.shape = CircleShape2D.new()
-	if not $InfluenceArea/CollisionShape2D.shape:
-		$InfluenceArea/CollisionShape2D.shape = CircleShape2D.new()
+	$GravityArea/Collision.shape = CircleShape2D.new()
+	$Body/Collision.shape = CircleShape2D.new()
+	$InfluenceArea/CollisionShape2D.shape = CircleShape2D.new()
 	_refresh_children_proprerties()
 	
 func get_gravity_at(point: Vector2) -> Vector2:
@@ -63,3 +60,17 @@ func get_gravity_at(point: Vector2) -> Vector2:
 	var _gravity = $GravityArea.gravity / distance_squared * $GravityArea.gravity_point_unit_distance ** 2
 	
 	return direction * _gravity
+
+func _on_influence_area_body_entered(body):
+	print("ENTER ", body is Player)
+	if body is Player:
+		body.current_planet = self
+
+
+func _on_influence_area_body_exited(body):
+	print("EXIT ", body is Player)
+	if body is Player:
+		body.current_planet = null
+	
+func get_gravity_center():
+	return $GravityArea.global_position + $GravityArea.gravity_point_center

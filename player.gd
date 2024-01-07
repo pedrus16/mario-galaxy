@@ -1,9 +1,11 @@
 extends CharacterBody2D
+class_name Player
 
 const move_speed := 250.0
 const jump_speed := 400.0
 
 var planets = []
+var current_planet = null
 
 var direction := 0
 
@@ -47,11 +49,13 @@ func _physics_process(delta):
 			
 		var _velocity = get_real_velocity()
 		_velocity += gravity * delta
+
+		# Align player orientation when entering planet's area of influence
+		if current_planet:
+			var down_direction = global_position.direction_to(current_planet.get_gravity_center()).normalized()
+			if not down_direction.is_zero_approx():
+				set_up_direction(-down_direction)
 		
-		# Align player orientation to gravity direction
-		var gravity_direction = gravity.normalized()
-		if not gravity_direction.is_zero_approx():
-			set_up_direction(-gravity_direction)
 		$Collision.rotation = up_direction.angle() + PI / 2
 		
 		# Walk
