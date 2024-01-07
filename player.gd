@@ -89,11 +89,10 @@ func _physics_process(delta):
 	camera.rotation = up_direction.angle() + PI / 2
 	$Collision.rotation = up_direction.angle() + PI / 2
 	
-	if is_multiplayer_authority():
-		if Input.is_action_just_pressed("zoom_out") and camera.zoom.x > (1.0 / 128.0):
-			camera.zoom *= 0.5
-		if Input.is_action_just_pressed("zoom_in") and camera.zoom.x < 1:
-			camera.zoom *= 2
+	if Input.is_action_just_pressed("zoom_out") and camera.zoom.x > (1.0 / 128.0):
+		camera.zoom *= 0.5
+	if Input.is_action_just_pressed("zoom_in") and camera.zoom.x < 1:
+		camera.zoom *= 2
 		
 	# Push rigid bodies away
 	var push_force = 80.0

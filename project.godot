@@ -13,7 +13,7 @@ config_version=5
 config/name="Mario Galaxy"
 run/main_scene="res://multiplayer.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://assets/cosmonaut.png"
 
 [display]
 
