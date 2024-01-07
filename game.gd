@@ -19,7 +19,6 @@ func host():
 	peer.create_server(DEFAULT_PORT, MAX_PEERS)
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(_on_player_connected)
-	multiplayer.peer_disconnected.connect(_on_player_disconnected)
 	
 	var world = preload("res://world.tscn").instantiate()
 	$/root.add_child(world)
@@ -65,4 +64,6 @@ func spawn_player(peer_id):
 	$/root/World.add_child(player, true)
 	
 func despawn_player(peer_id):
+	if not $/root/World.has_node(str(peer_id)):
+		return
 	$/root/World.get_node(str(peer_id)).queue_free()
