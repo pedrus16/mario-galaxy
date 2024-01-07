@@ -30,7 +30,7 @@ class_name Planet
 		influence_height = new_height
 		if not is_inside_tree():
 			return
-		$InfluenceArea/CollisionShape2D.shape.set_radius(radius + new_height)
+		$InfluenceArea/CollisionShape2D.shape.set_radius(radius * 100 + influence_height * 100)
 	get:
 		return influence_height
 		
@@ -39,7 +39,7 @@ func _refresh_children_proprerties():
 	$GravityArea/Collision.shape.set_radius(radius * 100 * gravity)
 	$Body/Collision.shape.set_radius(radius * 100)
 	$GravityArea.set_gravity(gravity * 100)
-	$InfluenceArea/CollisionShape2D.shape.set_radius(radius + influence_height)
+	$InfluenceArea/CollisionShape2D.shape.set_radius(radius * 100 + influence_height * 100)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -50,14 +50,9 @@ func _ready():
 	if not $InfluenceArea/CollisionShape2D.shape:
 		$InfluenceArea/CollisionShape2D.shape = CircleShape2D.new()
 	_refresh_children_proprerties()
-
-func _draw():
-	# Draw shaded regions to show the areas.
-	draw_circle($Body.position, $Body/Collision.shape.radius,
-				Color(0.25, 0.15, 0.05, 1))
 	
 func get_gravity_at(point: Vector2) -> Vector2:
-	var center = $GravityArea.position + $GravityArea.gravity_point_center
+	var center = $GravityArea.global_position + $GravityArea.gravity_point_center
 	var direction = point.direction_to(center).normalized()
 	
  	# Set arbitrary direction if the point is exactly at center of gravity
