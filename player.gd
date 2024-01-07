@@ -1,14 +1,14 @@
 extends CharacterBody2D
 
-const move_speed = 250.0
-const jump_speed = 400.0
+const move_speed := 250.0
+const jump_speed := 400.0
 
 var planets = []
 
-var direction = 0
-var jumping = false
+var direction := 0
+var jumping := false
 
-@onready var camera = $Camera2D
+@onready var camera := $Camera2D
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
@@ -26,15 +26,21 @@ func _ready():
 		#$Camera2D.rotation = up_direction.angle() + PI / 2
 		
 func _physics_process(delta):
-	$Sprite2D.rotation = get_up_direction().angle() + PI / 2
+	$PlayerSprite.rotation = get_up_direction().angle() + PI / 2
 	camera.rotation = get_up_direction().angle() + PI / 2
 	direction = 0
+	
+	#print(is_on_floor())
 	
 	if is_multiplayer_authority():
 		if Input.is_action_pressed("walk_left"):
 			direction += -1
 		if Input.is_action_pressed("walk_right"):
 			direction += 1
+		if Input.is_action_just_pressed("zoom_out") and camera.zoom.x > 0.125:
+			camera.zoom *= 0.5
+		if Input.is_action_just_pressed("zoom_in") and camera.zoom.x < 1:
+			camera.zoom *= 2
 
 		var _velocity = get_real_velocity()
 		for planet in planets:
