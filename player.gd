@@ -9,6 +9,8 @@ var current_planet = null
 
 var direction := 0
 
+var points = []
+
 @onready var camera := $Camera2D
 
 func _enter_tree():
@@ -22,9 +24,28 @@ func _ready():
 	planets = get_tree().get_nodes_in_group("planet")
 	camera.make_current()
 	
-#func _process(_delta):
-	#if $Camera2D:
-		#$Camera2D.rotation = up_direction.angle() + PI / 2
+func _draw():
+	draw_polyline(points, Color(1, 0, 0, 1))
+	
+func _process(_delta):
+	# Trajectory computation
+	# TODO Implement Runge-Kutta method for better precision https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods				
+	var _position = Vector2()
+	var _vel = get_real_velocity()
+	points = [_position]
+	var hit = false
+	for i in 200:
+		var _gravity = Vector2()
+		for planet in planets:
+			_gravity += planet.get_gravity_at(global_position + _position)
+			if (global_position + _position).distance_to(planet.global_position) <= planet.radius * 100:
+				hit = true
+		if hit:
+			break
+		_vel += _gravity * 1/8
+		_position += _vel * 1/8
+		points.push_front(_position)
+	queue_redraw()
 		
 func _physics_process(delta):
 	$PlayerSprite.rotation = get_up_direction().angle() + PI / 2

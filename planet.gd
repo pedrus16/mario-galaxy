@@ -48,6 +48,14 @@ func _ready():
 	$InfluenceArea/CollisionShape2D.shape = CircleShape2D.new()
 	_refresh_children_proprerties()
 	
+func _on_influence_area_body_entered(body):
+	if body is Player:
+		body.current_planet = self
+
+func _on_influence_area_body_exited(body):
+	if body is Player:
+		body.current_planet = null
+	
 func get_gravity_at(point: Vector2) -> Vector2:
 	var center = $GravityArea.global_position + $GravityArea.gravity_point_center
 	var direction = point.direction_to(center).normalized()
@@ -60,15 +68,6 @@ func get_gravity_at(point: Vector2) -> Vector2:
 	var _gravity = $GravityArea.gravity / distance_squared * $GravityArea.gravity_point_unit_distance ** 2
 	
 	return direction * _gravity
-
-func _on_influence_area_body_entered(body):
-	if body is Player:
-		body.current_planet = self
-
-
-func _on_influence_area_body_exited(body):
-	if body is Player:
-		body.current_planet = null
 	
 func get_gravity_center():
 	return $GravityArea.global_position + $GravityArea.gravity_point_center
