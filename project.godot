@@ -11,13 +11,9 @@ config_version=5
 [application]
 
 config/name="Mario Galaxy"
-run/main_scene="res://menu.tscn"
+run/main_scene="res://multiplayer.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
-
-[autoload]
-
-game="*res://game.gd"
 
 [display]
 

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhyinectmbfdd"]
+
+[ext_resource type="PackedScene" uid="uid://drpsdukgolai2" path="res://menu.tscn" id="1_b86er"]
+[ext_resource type="Script" path="res://multiplayer.gd" id="1_w4vgi"]
+
+[node name="Multiplayer" type="Node"]
+script = ExtResource("1_w4vgi")
+
+[node name="World" type="Node" parent="."]
+
+[node name="WorldSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://world.tscn")
+spawn_path = NodePath("../World")
+spawn_limit = 1
+
+[node name="Menu" parent="." instance=ExtResource("1_b86er")]
+
+[connection signal="host_clicked" from="Menu" to="." method="_on_menu_host_clicked"]
+[connection signal="join_clicked" from="Menu" to="." method="_on_menu_join_clicked"]

@@ -1,17 +1,14 @@
 extends Control
 
+signal host_clicked
+signal join_clicked(address: String)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
-
-
 func _on_host_button_pressed():
-	game.host()
+	host_clicked.emit()
 
 func _on_join_button_pressed():
-	game.join($CenterContainer/VBoxContainer/IPInput.text)
+	join_clicked.emit($CenterContainer/VBoxContainer/IPInput.text)

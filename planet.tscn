@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" path="res://planet.gd" id="1_0nmii"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_pyjo6"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_grdq6"]
 radius = 4900.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_aanqq"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_qu6kb"]
 radius = 500.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ww13e"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_8js1n"]
 radius = 1000.0
 
 [node name="Planet" type="Node2D" groups=["planet"]]
@@ -22,20 +22,20 @@ gravity_point_center = Vector2(0, 0)
 gravity_direction = Vector2(0, 0)
 
 [node name="Collision" type="CollisionShape2D" parent="GravityArea"]
-shape = SubResource("CircleShape2D_pyjo6")
+shape = SubResource("CircleShape2D_grdq6")
 debug_color = Color(0, 0.6, 0.701961, 0.117647)
 
 [node name="Body" type="AnimatableBody2D" parent="."]
 
 [node name="Collision" type="CollisionShape2D" parent="Body"]
-shape = SubResource("CircleShape2D_aanqq")
+shape = SubResource("CircleShape2D_qu6kb")
 debug_color = Color(0.701961, 0.482353, 0.262745, 0.419608)
 
 [node name="InfluenceArea" type="Area2D" parent="."]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InfluenceArea"]
-shape = SubResource("CircleShape2D_ww13e")
+shape = SubResource("CircleShape2D_8js1n")
 debug_color = Color(0.611765, 0.431373, 0.827451, 0.0941176)
 
 [connection signal="body_entered" from="GravityArea" to="." method="_on_area_of_influence_body_entered"]
