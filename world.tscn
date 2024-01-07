@@ -20,4 +20,13 @@ _spawnable_scenes = PackedStringArray("res://player.tscn")
 spawn_path = NodePath("..")
 
 [node name="RigidBody2D2" parent="." instance=ExtResource("2_584an")]
-position = Vector2(0, -128)
+position = Vector2(180, 438)
+
+[node name="RigidBody2D3" parent="." instance=ExtResource("2_584an")]
+position = Vector2(-204, 426)
+
+[node name="RigidBody2D4" parent="." instance=ExtResource("2_584an")]
+position = Vector2(369, 393)
+
+[node name="RigidBody2D5" parent="." instance=ExtResource("2_584an")]
+position = Vector2(339, 528)

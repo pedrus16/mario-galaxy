@@ -21,10 +21,7 @@ properties/3/replication_mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bt3en")
-
-[node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color(1, 0, 0, 1)
-polygon = PackedVector2Array(-48, 0, -34, -33, 0, -48, 34, -34, 48, 0, 34, 34, 0, 48, -34, 34)
+debug_color = Color(0.6, 0.611765, 0.588235, 0.419608)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_hxunp")

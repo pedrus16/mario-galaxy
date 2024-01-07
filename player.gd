@@ -48,7 +48,9 @@ func _physics_process(delta):
 			gravity += planet.get_gravity_at(global_position)
 			
 		var _velocity = get_real_velocity()
-		_velocity += gravity * delta
+		
+		if not is_on_floor():
+			_velocity += gravity * delta
 
 		# Align player orientation when entering planet's area of influence
 		if current_planet:
@@ -69,4 +71,11 @@ func _physics_process(delta):
 		
 		set_velocity(_velocity)
 		move_and_slide()
+		
+		# Push rigid bodies away
+		var push_force = 80.0
+		for i in get_slide_collision_count():
+			var c = get_slide_collision(i)
+			if c.get_collider() is RigidBody2D:
+				c.get_collider().apply_central_impulse(-c.get_normal() * push_force)
 
