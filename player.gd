@@ -49,7 +49,8 @@ func _physics_process(delta):
 			var gravity_direction = gravity.normalized()
 			_velocity += gravity * delta
 			
-			set_up_direction(-gravity_direction)
+			if not gravity_direction.is_zero_approx():
+				set_up_direction(-gravity_direction)
 			$Collision.rotation = up_direction.angle() + PI / 2
 			
 			# Walk

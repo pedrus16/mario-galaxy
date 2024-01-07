@@ -4,9 +4,10 @@
 
 [node name="World" type="Node2D"]
 
-[node name="Planet" parent="." instance=ExtResource("1_vorvx")]
-radius = 5.0
-influence_height = 1264.9
+[node name="Planet2" parent="." instance=ExtResource("1_vorvx")]
+position = Vector2(5312, -2875)
+radius = 10.0
+gravity = 0.0
 
 [node name="Spawn" type="Marker2D" parent="."]
 position = Vector2(-76, -258)
