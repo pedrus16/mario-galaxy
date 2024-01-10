@@ -1,18 +1,39 @@
-[gd_scene load_steps=5 format=3 uid="uid://dw2qmdtemubuo"]
+[gd_scene load_steps=6 format=3 uid="uid://dw2qmdtemubuo"]
 
 [ext_resource type="Script" path="res://planet.gd" id="1_0nmii"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_grdq6"]
-radius = 4900.0
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_44871"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:constant_linear_velocity")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:constant_angular_velocity")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qu6kb"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_8cu4q"]
 radius = 500.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_8js1n"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_oy03w"]
+radius = 4900.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ccx0o"]
 radius = 1000.0
 
-[node name="Planet" type="Node2D" groups=["planet"]]
+[node name="Planet" type="AnimatableBody2D" groups=["planet"]]
 script = ExtResource("1_0nmii")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_44871")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_8cu4q")
+debug_color = Color(0.701961, 0.482353, 0.262745, 0.419608)
 
 [node name="GravityArea" type="Area2D" parent="."]
 gravity_space_override = 1
@@ -22,23 +43,15 @@ gravity_point_center = Vector2(0, 0)
 gravity_direction = Vector2(0, 0)
 
 [node name="Collision" type="CollisionShape2D" parent="GravityArea"]
-shape = SubResource("CircleShape2D_grdq6")
+shape = SubResource("CircleShape2D_oy03w")
 debug_color = Color(0, 0.6, 0.701961, 0.117647)
-
-[node name="Body" type="AnimatableBody2D" parent="."]
-
-[node name="Collision" type="CollisionShape2D" parent="Body"]
-shape = SubResource("CircleShape2D_qu6kb")
-debug_color = Color(0.701961, 0.482353, 0.262745, 0.419608)
 
 [node name="InfluenceArea" type="Area2D" parent="."]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InfluenceArea"]
-shape = SubResource("CircleShape2D_8js1n")
+shape = SubResource("CircleShape2D_ccx0o")
 debug_color = Color(0.611765, 0.431373, 0.827451, 0.0941176)
 
-[connection signal="body_entered" from="GravityArea" to="." method="_on_area_of_influence_body_entered"]
-[connection signal="body_exited" from="GravityArea" to="." method="_on_area_of_influence_body_exited"]
 [connection signal="body_entered" from="InfluenceArea" to="." method="_on_influence_area_body_entered"]
 [connection signal="body_exited" from="InfluenceArea" to="." method="_on_influence_area_body_exited"]

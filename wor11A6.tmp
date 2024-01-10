@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://btfdohv5uyusv"]
+
+[ext_resource type="PackedScene" uid="uid://dw2qmdtemubuo" path="res://planet.tscn" id="1_vorvx"]
+[ext_resource type="Script" path="res://world.gd" id="1_ypd81"]
+[ext_resource type="Script" path="res://orbit.gd" id="3_cski7"]
+
+[sub_resource type="Curve2D" id="Curve2D_w77p3"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -2000, 0, 0, 0, 0, 0, 0, -2000, 0, 0, 0, 0, 2000, 0, 0, 0, 0, 0, 0, 2000, 0, 0, 0, 0, -2000, 0)
+}
+point_count = 5
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_ypd81")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player.tscn")
+spawn_path = NodePath("../Players")
+spawn_limit = 8
+
+[node name="Planet2" parent="." instance=ExtResource("1_vorvx")]
+position = Vector2(6000, 0)
+radius = 10.0
+
+[node name="Players" type="Node2D" parent="."]
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_w77p3")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(-2000, 0)
+rotation = -0.785398
+script = ExtResource("3_cski7")
+
+[node name="Planet" parent="Path2D/PathFollow2D" instance=ExtResource("1_vorvx")]
+
+[node name="Spawn" type="Marker2D" parent="Path2D/PathFollow2D/Planet"]
+position = Vector2(463, 521)
+rotation = 1.5708
