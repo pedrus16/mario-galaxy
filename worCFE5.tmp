@@ -18,12 +18,9 @@ spawn_limit = 8
 [node name="Orbit" type="Node2D" parent="System"]
 script = ExtResource("2_pn3b5")
 radius = 10000.0
-speed = 500.0
 
 [node name="Earth" parent="System/Orbit" instance=ExtResource("1_vorvx")]
 position = Vector2(-10000, 0)
-scale = Vector2(0.999928, 0.999928)
-radius = 10.0
 color = Color(0.211765, 0.654902, 1, 1)
 
 [node name="Spawn" type="Marker2D" parent="System/Orbit/Earth"]

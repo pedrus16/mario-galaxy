@@ -25,7 +25,7 @@ func _exit_tree():
 func add_player(id: int):
 	var character = preload("res://player.tscn").instantiate()
 	character.player = id
-	character.position = $Orbit/Planet/Spawn.global_position
+	character.position = $System/Orbit/Earth/Spawn.global_position
 	character.name = str(id)
 	$Players.add_child(character, true)
 

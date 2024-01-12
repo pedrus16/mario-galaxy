@@ -8,8 +8,6 @@ class_name Planet
 		radius = new_radius
 		if not is_inside_tree():
 			return
-		$GravityArea.set_gravity_point_unit_distance(new_radius * 100)
-		$GravityArea/Collision.shape.set_radius(new_radius * 100 * gravity)
 		$Collision.shape.set_radius(new_radius * 100)
 	get:
 		return radius
@@ -18,9 +16,6 @@ class_name Planet
 @export_range(0, 10000) var gravity := 9.8:
 	set(new_gravity):
 		gravity = new_gravity
-		if not is_inside_tree():
-			return
-		$GravityArea.set_gravity(new_gravity * 100)
 	get:
 		return gravity
 		
@@ -35,23 +30,24 @@ class_name Planet
 		return influence_height
 		
 @export var orbit_radius := 1000.0
+
+@export var color := Color(1, 1, 1, 1):
+	set(new_color):
+		color = new_color
+		queue_redraw()
 		
 func _refresh_children_proprerties():
-	$GravityArea.set_gravity_point_unit_distance(radius * 100)
-	$GravityArea/Collision.shape.set_radius(radius * 100 * gravity)
 	$Collision.shape.set_radius(radius * 100)
-	$GravityArea.set_gravity(gravity * 100)
 	$InfluenceArea/CollisionShape2D.shape.set_radius(radius * 100 + influence_height * 100)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$GravityArea/Collision.shape = CircleShape2D.new()
 	$Collision.shape = CircleShape2D.new()
 	$InfluenceArea/CollisionShape2D.shape = CircleShape2D.new()
 	_refresh_children_proprerties()
 	
 func _draw():
-	draw_circle($Collision.position, $Collision.shape.radius, Color(0.5, 0, 0, 1))
+	draw_circle($Collision.position, $Collision.shape.radius, color)
 	
 func _on_influence_area_body_entered(body):
 	if body is Player:
@@ -62,7 +58,7 @@ func _on_influence_area_body_exited(body):
 		body.current_planet = null
 	
 func get_gravity_at(point: Vector2) -> Vector2:
-	var center = $GravityArea.global_position + $GravityArea.gravity_point_center
+	var center = global_position
 	var direction = point.direction_to(center).normalized()
 	
  	# Set arbitrary direction if the point is exactly at center of gravity
@@ -70,9 +66,9 @@ func get_gravity_at(point: Vector2) -> Vector2:
 		direction = Vector2(0, 1)
 	
 	var distance_squared = max(0.0001, point.distance_squared_to(center))
-	var _gravity = $GravityArea.gravity / distance_squared * $GravityArea.gravity_point_unit_distance ** 2
+	var _gravity = (gravity * 100) / distance_squared * (radius * 100) ** 2
 	
 	return direction * _gravity
 	
 func get_gravity_center():
-	return $GravityArea.global_position + $GravityArea.gravity_point_center
+	return global_position
