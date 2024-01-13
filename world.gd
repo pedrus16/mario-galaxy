@@ -25,7 +25,7 @@ func _exit_tree():
 func add_player(id: int):
 	var character = preload("res://player.tscn").instantiate()
 	character.player = id
-	character.position = $System/Orbit/Earth/Spawn.global_position
+	character.position = get_tree().get_first_node_in_group("spawn").global_position
 	character.name = str(id)
 	$Players.add_child(character, true)
 

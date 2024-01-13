@@ -1,6 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dw2qmdtemubuo"]
+[gd_scene load_steps=6 format=3 uid="uid://dw2qmdtemubuo"]
 
 [ext_resource type="Script" path="res://planet.gd" id="1_0nmii"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4g7ry"]
+rough = true
+absorbent = true
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_44871"]
 properties/0/path = NodePath(".:position")
@@ -23,6 +27,7 @@ radius = 500.0
 radius = 1000.0
 
 [node name="Planet" type="AnimatableBody2D" groups=["planet"]]
+physics_material_override = SubResource("PhysicsMaterial_4g7ry")
 script = ExtResource("1_0nmii")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

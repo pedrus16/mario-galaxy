@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://btfdohv5uyusv"]
+[gd_scene load_steps=7 format=3 uid="uid://btfdohv5uyusv"]
 
 [ext_resource type="PackedScene" uid="uid://dw2qmdtemubuo" path="res://planet.tscn" id="1_vorvx"]
 [ext_resource type="Script" path="res://world.gd" id="1_ypd81"]
 [ext_resource type="Script" path="res://orbit.gd" id="2_pn3b5"]
 [ext_resource type="Texture2D" uid="uid://bluy0ovcoa4hq" path="res://assets/cosmonaut.png" id="3_tkap3"]
 [ext_resource type="PackedScene" uid="uid://cfpdpqd1kba1u" path="res://module.tscn" id="5_mr4de"]
+[ext_resource type="Script" path="res://gravity.gd" id="6_4qwfw"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_ypd81")
@@ -19,8 +20,7 @@ spawn_limit = 8
 [node name="Orbit" type="Node2D" parent="System"]
 script = ExtResource("2_pn3b5")
 radius = 10000.0
-speed = 0.0
-rotation_speed = 5.0
+speed = 500.0
 
 [node name="Earth" parent="System/Orbit" instance=ExtResource("1_vorvx")]
 position = Vector2(-10000, 0)
@@ -52,3 +52,6 @@ texture = ExtResource("3_tkap3")
 
 [node name="LunarModule" parent="." instance=ExtResource("5_mr4de")]
 position = Vector2(-9736, -1100)
+
+[node name="RigidBodyGravity" type="Node" parent="."]
+script = ExtResource("6_4qwfw")

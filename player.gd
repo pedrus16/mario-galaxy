@@ -50,6 +50,17 @@ func _process(_delta):
 		_position += _vel * 1/8
 		points.push_front(_position)
 	queue_redraw()
+	
+	if is_on_floor() and input.direction:
+		$PlayerSprite.play("walk")
+	elif not is_on_floor():
+		$PlayerSprite.play("jump")		
+	else:
+		$PlayerSprite.play("idle")
+	
+	if is_on_floor() and input.direction != 0:
+		$PlayerSprite.flip_h = input.direction < 0
+		
 
 func get_combined_gravity():
 	var gravity = Vector2()
@@ -80,10 +91,13 @@ func _physics_process(delta):
 	if input.jumping:
 		velocity += up_direction * JUMP_VELOCITY
 	
+	move_and_slide()
+	
+	if not input.jumping:
+		apply_floor_snap()
+		
 	# Reset jump state.
 	input.jumping = false
-	
-	move_and_slide()
 		
 	$PlayerSprite.rotation = up_direction.angle() + PI / 2
 	camera.rotation = up_direction.angle() + PI / 2
