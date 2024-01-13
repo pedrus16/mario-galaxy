@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://cgc5cxqhsp066"]
+[gd_scene load_steps=18 format=3 uid="uid://cgc5cxqhsp066"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_4o72w"]
 [ext_resource type="Texture2D" uid="uid://cyn6l2lmqr3kw" path="res://assets/idle.png" id="3_327ao"]
 [ext_resource type="Script" path="res://player_input.gd" id="3_k16no"]
 [ext_resource type="Texture2D" uid="uid://ck8ihs5byrqvi" path="res://assets/walk.png" id="3_r5qts"]
 [ext_resource type="Texture2D" uid="uid://sphlofgn5xw6" path="res://assets/jump.png" id="4_duqks"]
+[ext_resource type="Script" path="res://player_interaction.gd" id="6_330f3"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1uu38"]
 properties/0/path = NodePath(".:position")
@@ -94,10 +95,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 6.0
+"speed": 10.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_58v80"]
+radius = 24.0
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
+z_index = 1
 collision_layer = 2
 floor_snap_length = 10.0
 script = ExtResource("1_4o72w")
@@ -125,4 +130,16 @@ shape = SubResource("CircleShape2D_1shqn")
 texture_filter = 1
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_nslk6")
-animation = &"jump"
+animation = &"walk"
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("6_330f3")
+
+[node name="Collision" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_58v80")
+
+[connection signal="area_entered" from="InteractionArea" to="InteractionArea" method="_on_area_entered"]
+[connection signal="area_exited" from="InteractionArea" to="InteractionArea" method="_on_area_exited"]

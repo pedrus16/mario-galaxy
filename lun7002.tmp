@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://cfpdpqd1kba1u"]
+
+[ext_resource type="Texture2D" uid="uid://cmgxrtilrxlun" path="res://assets/module.png" id="1_bonml"]
+[ext_resource type="Script" path="res://gravity.gd" id="1_qrv71"]
+[ext_resource type="Script" path="res://vehicle.gd" id="3_an1cb"]
+[ext_resource type="Script" path="res://interact.gd" id="4_f7bap"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wpeom"]
+absorbent = true
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_g18kx"]
+properties/0/path = NodePath(".:linear_velocity")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:angular_velocity")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:position")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ushy2"]
+size = Vector2(90, 111)
+
+[node name="LunarModule" type="Node2D"]
+script = ExtResource("3_an1cb")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." groups=["rigidbody"]]
+collision_layer = 2
+mass = 1000.0
+physics_material_override = SubResource("PhysicsMaterial_wpeom")
+continuous_cd = 2
+script = ExtResource("1_qrv71")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="RigidBody2D"]
+replication_config = SubResource("SceneReplicationConfig_g18kx")
+
+[node name="Collision" type="CollisionPolygon2D" parent="RigidBody2D"]
+show_behind_parent = true
+polygon = PackedVector2Array(-96, 96, -96, 87, -75, -15, -30, -42, 30, -42, 75, -15, 96, 87, 96, 96)
+
+[node name="Module" type="Sprite2D" parent="RigidBody2D"]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("1_bonml")
+
+[node name="MainThruster" type="Marker2D" parent="RigidBody2D"]
+position = Vector2(0, 87)
+
+[node name="LeftThrusters" type="Node2D" parent="RigidBody2D"]
+position = Vector2(-57, -6)
+
+[node name="Up" type="Marker2D" parent="RigidBody2D/LeftThrusters"]
+position = Vector2(0, -18)
+
+[node name="Down" type="Marker2D" parent="RigidBody2D/LeftThrusters"]
+position = Vector2(0, 18)
+
+[node name="Left" type="Marker2D" parent="RigidBody2D/LeftThrusters"]
+position = Vector2(-18, 0)
+
+[node name="RightThrusters" type="Node2D" parent="RigidBody2D"]
+position = Vector2(57, -6)
+
+[node name="Up" type="Marker2D" parent="RigidBody2D/RightThrusters"]
+position = Vector2(0, -18)
+
+[node name="Down" type="Marker2D" parent="RigidBody2D/RightThrusters"]
+position = Vector2(0, 18)
+
+[node name="Right" type="Marker2D" parent="RigidBody2D/RightThrusters"]
+position = Vector2(18, 0)
+
+[node name="EntryArea" type="Area2D" parent="RigidBody2D"]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("4_f7bap")
+
+[node name="Collision" type="CollisionShape2D" parent="RigidBody2D/EntryArea"]
+position = Vector2(0, 16.5)
+shape = SubResource("RectangleShape2D_ushy2")
+
+[connection signal="player_interacted" from="RigidBody2D/EntryArea" to="." method="_on_entry_area_player_interacted"]

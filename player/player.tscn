@@ -1,0 +1,148 @@
+[gd_scene load_steps=18 format=3 uid="uid://cgc5cxqhsp066"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_4eg8x"]
+[ext_resource type="Script" path="res://player/player_input.gd" id="2_hpqr1"]
+[ext_resource type="Texture2D" uid="uid://cyn6l2lmqr3kw" path="res://assets/idle.png" id="3_rw6nh"]
+[ext_resource type="Texture2D" uid="uid://sphlofgn5xw6" path="res://assets/jump.png" id="4_xwyr8"]
+[ext_resource type="Texture2D" uid="uid://ck8ihs5byrqvi" path="res://assets/walk.png" id="5_ejupf"]
+[ext_resource type="Script" path="res://player/player_interaction.gd" id="6_36nbt"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1uu38"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:up_direction")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("PlayerSprite:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:player")
+properties/4/spawn = true
+properties/4/replication_mode = 0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_o8isl"]
+properties/0/path = NodePath("PlayerInput:direction")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("PlayerInput:vehicle_direction")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1shqn"]
+radius = 24.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xtjb8"]
+atlas = ExtResource("5_ejupf")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jl5e"]
+atlas = ExtResource("5_ejupf")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7p7wf"]
+atlas = ExtResource("5_ejupf")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qf1hl"]
+atlas = ExtResource("5_ejupf")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xt2iv"]
+atlas = ExtResource("5_ejupf")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_708mf"]
+atlas = ExtResource("5_ejupf")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nslk6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_rw6nh")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_xwyr8")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xtjb8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jl5e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7p7wf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qf1hl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xt2iv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_708mf")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_58v80"]
+radius = 24.0
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+z_index = 1
+collision_layer = 2
+floor_snap_length = 10.0
+script = ExtResource("1_4eg8x")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_1uu38")
+
+[node name="PlayerInput" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_o8isl")
+script = ExtResource("2_hpqr1")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+ignore_rotation = false
+position_smoothing_speed = 20.0
+rotation_smoothing_speed = 8.0
+editor_draw_drag_margin = true
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+show_behind_parent = true
+shape = SubResource("CircleShape2D_1shqn")
+
+[node name="Trajectory" type="Line2D" parent="."]
+
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_nslk6")
+animation = &"walk"
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("6_36nbt")
+
+[node name="Collision" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_58v80")
+
+[connection signal="area_entered" from="InteractionArea" to="InteractionArea" method="_on_area_entered"]
+[connection signal="area_exited" from="InteractionArea" to="InteractionArea" method="_on_area_exited"]

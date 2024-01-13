@@ -1,4 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://inqk8m6akxsk"]
+[gd_scene load_steps=5 format=3 uid="uid://inqk8m6akxsk"]
+
+[ext_resource type="Script" path="res://gravity.gd" id="1_bau2u"]
+[ext_resource type="Texture2D" uid="uid://mr81074ltqr2" path="res://assets/dirt.png" id="1_ul1bn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bt3en"]
 radius = 48.0
@@ -18,6 +21,7 @@ properties/3/spawn = true
 properties/3/replication_mode = 1
 
 [node name="RigidBody2D2" type="RigidBody2D"]
+script = ExtResource("1_bau2u")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bt3en")
@@ -25,3 +29,9 @@ debug_color = Color(0.6, 0.611765, 0.588235, 0.419608)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_hxunp")
+
+[node name="Dirt" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(2.38419e-06, -1.19209e-06)
+scale = Vector2(2.75, 2.875)
+texture = ExtResource("1_ul1bn")

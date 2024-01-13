@@ -33,6 +33,7 @@ func _draw():
 	
 func _process(_delta):
 	# Trajectory computation
+	# TODO Refactor into a separate script (code also present in gravity.gd)
 	# TODO Implement Runge-Kutta method for better precision https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods
 	var _position = Vector2()
 	var _vel = get_real_velocity()
@@ -50,6 +51,19 @@ func _process(_delta):
 		_position += _vel * 1/8
 		points.push_front(_position)
 	queue_redraw()
+	
+	if input.interacting:
+		input.interacting = false
+		
+		if not $InteractionArea.interactable:
+			return
+		
+		$InteractionArea.interactable.interact(self)
+	
+	if Input.is_action_just_pressed("zoom_out") and camera.zoom.x > (1.0 / 128.0):
+		camera.zoom *= 0.5
+	if Input.is_action_just_pressed("zoom_in") and camera.zoom.x < 1:
+		camera.zoom *= 2	
 	
 	if is_on_floor() and input.direction:
 		$PlayerSprite.play("walk")
@@ -103,15 +117,9 @@ func _physics_process(delta):
 	camera.rotation = up_direction.angle() + PI / 2
 	$Collision.rotation = up_direction.angle() + PI / 2
 	
-	if Input.is_action_just_pressed("zoom_out") and camera.zoom.x > (1.0 / 128.0):
-		camera.zoom *= 0.5
-	if Input.is_action_just_pressed("zoom_in") and camera.zoom.x < 1:
-		camera.zoom *= 2
-		
 	# Push rigid bodies away
 	var push_force = 80.0
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
 		if c.get_collider() is RigidBody2D:
 			c.get_collider().apply_central_impulse(-c.get_normal() * push_force)
-
