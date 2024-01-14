@@ -1,10 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://btfdohv5uyusv"]
+[gd_scene load_steps=10 format=3 uid="uid://btfdohv5uyusv"]
 
 [ext_resource type="PackedScene" uid="uid://dw2qmdtemubuo" path="res://planet/planet.tscn" id="1_vorvx"]
 [ext_resource type="Script" path="res://world.gd" id="1_ypd81"]
+[ext_resource type="Material" uid="uid://6w4wttqfpegc" path="res://materials/grid.tres" id="2_eo6or"]
 [ext_resource type="Script" path="res://planet/orbit.gd" id="2_pn3b5"]
-[ext_resource type="Texture2D" uid="uid://bluy0ovcoa4hq" path="res://assets/cosmonaut.png" id="3_tkap3"]
 [ext_resource type="PackedScene" uid="uid://cfpdpqd1kba1u" path="res://lunar_module.tscn" id="5_mr4de"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_unghq"]
+material = ExtResource("2_eo6or")
+
+[sub_resource type="Gradient" id="Gradient_kty8d"]
+offsets = PackedFloat32Array(0.34188, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_akno4"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ssxgn"]
+color_ramp = SubResource("Gradient_kty8d")
+noise = SubResource("FastNoiseLite_akno4")
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_ypd81")
@@ -13,6 +25,16 @@ script = ExtResource("1_ypd81")
 _spawnable_scenes = PackedStringArray("res://player/player.tscn")
 spawn_path = NodePath("../Players")
 spawn_limit = 8
+
+[node name="Background" type="MeshInstance2D" parent="."]
+z_index = -1
+z_as_relative = false
+texture_filter = 1
+texture_repeat = 2
+material = ExtResource("2_eo6or")
+scale = Vector2(50000, 50000)
+mesh = SubResource("QuadMesh_unghq")
+texture = SubResource("NoiseTexture2D_ssxgn")
 
 [node name="System" type="Node2D" parent="."]
 
@@ -38,18 +60,6 @@ gravity = 1.0
 color = Color(1, 0.996078, 0, 1)
 
 [node name="Players" type="Node2D" parent="."]
-
-[node name="Sprite2D2" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(-4572, 3556)
-scale = Vector2(32, 32)
-texture = ExtResource("3_tkap3")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(-5181, -4089)
-scale = Vector2(64, 64)
-texture = ExtResource("3_tkap3")
 
 [node name="LunarModule" parent="." instance=ExtResource("5_mr4de")]
 position = Vector2(-10200, -1000)
