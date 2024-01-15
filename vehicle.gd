@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Vehicle
+
 var player: Player = null
 var player_parent = null
 
@@ -38,18 +40,21 @@ func _physics_process(delta):
 	if not player:
 		return
 	
+	# Keep the player position on the ship
+	player.global_position = $RigidBody2D.global_position
+	player.global_rotation = $RigidBody2D.global_rotation
+	
+	# Ship controls
 	if player.input.vehicle_direction.is_zero_approx():
 		return
 		
 	var main_force = 1000000
 	var main_thrust = Vector2(0, player.input.vehicle_direction.y) * main_force
-	#$RigidBody2D/MainThruster.global_position
 	$RigidBody2D.apply_central_force(main_thrust.rotated($RigidBody2D.rotation))
-	
 	var side_force = 10000000
-	#var side_thrust = Vector2(0, player.input.vehicle_direction.x) * side_force
-	#print(PhysicsServer2D.body_get_param($RigidBody2D.get_rid(), PhysicsServer2D.BODY_PARAM_INERTIA))
 	$RigidBody2D.apply_torque(player.input.vehicle_direction.x * side_force)
+	
+
 	
 
 func enter(_player: Player):
@@ -58,7 +63,6 @@ func enter(_player: Player):
 
 	player = _player
 	player_parent = player.get_parent()
-	player.reparent($RigidBody2D, false)
 	player.set_physics_process(false)
 	player.position = Vector2()
 	player.rotation = 0
@@ -69,7 +73,6 @@ func exit():
 	if not player:
 		return
 		
-	player.reparent(player_parent)
 	player.set_physics_process(true)
 	player.position = $RigidBody2D.global_position
 	player.rotation = 0
