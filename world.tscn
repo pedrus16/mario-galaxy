@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://btfdohv5uyusv"]
+[gd_scene load_steps=8 format=3 uid="uid://btfdohv5uyusv"]
 
 [ext_resource type="PackedScene" uid="uid://dw2qmdtemubuo" path="res://planet/planet.tscn" id="1_vorvx"]
 [ext_resource type="Script" path="res://world.gd" id="1_ypd81"]
 [ext_resource type="Material" uid="uid://6w4wttqfpegc" path="res://materials/grid.tres" id="2_eo6or"]
 [ext_resource type="Script" path="res://planet/orbit.gd" id="2_pn3b5"]
+[ext_resource type="Texture2D" uid="uid://5hrnibewxigh" path="res://assets/moon.png" id="5_jgp58"]
 [ext_resource type="PackedScene" uid="uid://cfpdpqd1kba1u" path="res://lunar_module.tscn" id="5_mr4de"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_unghq"]
@@ -36,8 +37,14 @@ speed = -400.0
 [node name="Earth" parent="System/Orbit" instance=ExtResource("1_vorvx")]
 position = Vector2(-10000, 0)
 scale = Vector2(0.999928, 0.999928)
-radius = 10.0
-color = Color(0.211765, 0.654902, 1, 1)
+radius = 7.2
+color = Color(1, 1, 1, 0)
+
+[node name="Planet" type="Sprite2D" parent="System/Orbit/Earth"]
+texture_filter = 1
+position = Vector2(0, 1)
+scale = Vector2(3, 3)
+texture = ExtResource("5_jgp58")
 
 [node name="Spawn" type="Marker2D" parent="System/Orbit/Earth" groups=["spawn"]]
 position = Vector2(200, -1050)
