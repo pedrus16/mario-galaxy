@@ -23,6 +23,9 @@ properties/3/replication_mode = 1
 properties/4/path = NodePath(".:player")
 properties/4/spawn = true
 properties/4/replication_mode = 0
+properties/5/path = NodePath(".:visible")
+properties/5/spawn = true
+properties/5/replication_mode = 2
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_o8isl"]
 properties/0/path = NodePath("PlayerInput:direction")
@@ -143,8 +146,6 @@ script = ExtResource("6_36nbt")
 
 [node name="Collision" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("CircleShape2D_58v80")
-
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 
 [connection signal="area_entered" from="InteractionArea" to="InteractionArea" method="_on_area_entered"]
 [connection signal="area_exited" from="InteractionArea" to="InteractionArea" method="_on_area_exited"]

@@ -43,6 +43,6 @@ func _physics_process(delta):
 		var _radius = body.position.distance_to(position)
 		var direction = body.position.direction_to(position).rotated(deg_to_rad(90))
 		body.transform = Transform2D(deg_to_rad(body.rotation_degrees + (rotation_speed * delta)), body.position + direction * speed * delta)
-		body.constant_linear_velocity = direction * speed
-		body.constant_angular_velocity = deg_to_rad(rotation_speed)
+		#body.constant_linear_velocity = direction * speed
+		#body.constant_angular_velocity = deg_to_rad(rotation_speed)
 

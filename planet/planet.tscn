@@ -20,10 +20,10 @@ properties/3/path = NodePath(".:constant_angular_velocity")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_n1gm4"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_tghg2"]
 radius = 500.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_r7htp"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_1jhm2"]
 radius = 1000.0
 
 [node name="Planet" type="AnimatableBody2D" groups=["planet"]]
@@ -34,14 +34,15 @@ script = ExtResource("1_0nmii")
 replication_config = SubResource("SceneReplicationConfig_44871")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_n1gm4")
+shape = SubResource("CircleShape2D_tghg2")
 debug_color = Color(0.701961, 0.482353, 0.262745, 0.419608)
 
 [node name="InfluenceArea" type="Area2D" parent="."]
 collision_mask = 2
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InfluenceArea"]
-shape = SubResource("CircleShape2D_r7htp")
+shape = SubResource("CircleShape2D_1jhm2")
 debug_color = Color(0.611765, 0.431373, 0.827451, 0.0941176)
 
 [connection signal="body_entered" from="InfluenceArea" to="." method="_on_influence_area_body_entered"]
