@@ -11,8 +11,5 @@ var player_parent = null
 func _ready():
 	pass # Replace with function body.
 
-func interact(node):
-	if not node is Player:
-		return
-	
-	player_interacted.emit(node)
+func interact(player: Player):
+	player_interacted.emit(player)

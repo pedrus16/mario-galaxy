@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cmgxrtilrxlun" path="res://assets/module.png" id="1_bonml"]
 [ext_resource type="Script" path="res://vehicle.gd" id="3_an1cb"]
-[ext_resource type="Script" path="res://interact.gd" id="4_f7bap"]
+[ext_resource type="Script" path="res://interactable.gd" id="3_rys5s"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_g18kx"]
 properties/0/path = NodePath(".:linear_velocity")
@@ -78,7 +78,7 @@ position = Vector2(48, -1)
 collision_layer = 4
 collision_mask = 0
 monitoring = false
-script = ExtResource("4_f7bap")
+script = ExtResource("3_rys5s")
 
 [node name="Collision" type="CollisionShape2D" parent="RigidBody2D/EntryArea"]
 position = Vector2(0, 44)

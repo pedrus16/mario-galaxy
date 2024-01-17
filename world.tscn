@@ -33,6 +33,7 @@ mesh = SubResource("QuadMesh_unghq")
 script = ExtResource("2_pn3b5")
 radius = 10000.0
 speed = 50.0
+rotation_speed = 2.0
 
 [node name="Earth" parent="System/Orbit" instance=ExtResource("1_vorvx")]
 position = Vector2(-10000, 0)
@@ -61,4 +62,4 @@ color = Color(1, 0.996078, 0, 1)
 position = Vector2(-10511, -5180)
 
 [node name="LunarModule2" parent="." instance=ExtResource("5_mr4de")]
-position = Vector2(-9511, -5180)
+position = Vector2(-9525, -5204)

@@ -8,6 +8,7 @@ const JUMP_VELOCITY := 512.0
 var planets = []
 var current_planet = null
 var points = []
+var in_vehicle := false
 
 # Set by the authority, synchronized on spawn.
 @export var player := 1 :
@@ -54,11 +55,7 @@ func _process(_delta):
 	
 	if input.interacting:
 		input.interacting = false
-		
-		if not $InteractionArea.interactable:
-			return
-		
-		$InteractionArea.interactable.interact(self)
+		$InteractionArea.try_interacting(self)
 	
 	if Input.is_action_just_pressed("zoom_out") and camera.zoom.x > (1.0 / 128.0):
 		camera.zoom *= 0.5

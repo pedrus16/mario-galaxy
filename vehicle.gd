@@ -65,6 +65,7 @@ func enter(_player: Player):
 	player.rotation = 0
 	player.camera.rotation = 0
 	player.visible = false
+	player.in_vehicle = true
 
 func exit():
 	if not player:
@@ -76,12 +77,14 @@ func exit():
 	player.visible = true
 	player.velocity = $RigidBody2D.linear_velocity
 	player.move_and_slide()
+	player.in_vehicle = false
 	player = null
 	
-func _on_entry_area_player_interacted(interacting_player):
+	
+func _on_entry_area_player_interacted(interacting_player: Player):
 	if player && interacting_player == player:
 		exit()
-	else:
+	elif not interacting_player.in_vehicle:
 		enter(interacting_player)
 
 
