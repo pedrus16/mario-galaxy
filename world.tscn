@@ -32,8 +32,8 @@ mesh = SubResource("QuadMesh_unghq")
 [node name="Orbit" type="Node2D" parent="System"]
 script = ExtResource("2_pn3b5")
 radius = 10000.0
-speed = 50.0
-rotation_speed = 2.0
+speed = 0.0
+rotation_speed = 0.0
 
 [node name="Earth" parent="System/Orbit" instance=ExtResource("1_vorvx")]
 position = Vector2(-10000, 0)
