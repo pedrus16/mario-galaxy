@@ -48,14 +48,11 @@ func _physics_process(delta):
 	if player.input.vehicle_direction.is_zero_approx():
 		return
 		
-	var main_force = 1000000
+	var main_force = 1500000
 	var main_thrust = Vector2(0, player.input.vehicle_direction.y) * main_force
 	$RigidBody2D.apply_central_force(main_thrust.rotated($RigidBody2D.rotation))
-	var side_force = 10000000
+	var side_force = 50000000
 	$RigidBody2D.apply_torque(player.input.vehicle_direction.x * side_force)
-	
-
-	
 
 func enter(_player: Player):
 	if player:

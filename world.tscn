@@ -32,30 +32,33 @@ mesh = SubResource("QuadMesh_unghq")
 [node name="Orbit" type="Node2D" parent="System"]
 script = ExtResource("2_pn3b5")
 radius = 10000.0
-speed = -400.0
+speed = 50.0
 
 [node name="Earth" parent="System/Orbit" instance=ExtResource("1_vorvx")]
 position = Vector2(-10000, 0)
 scale = Vector2(0.999928, 0.999928)
-radius = 7.2
+radius = 50.0
 color = Color(1, 1, 1, 0)
 
 [node name="Planet" type="Sprite2D" parent="System/Orbit/Earth"]
 texture_filter = 1
 position = Vector2(0, 1)
-scale = Vector2(3, 3)
+scale = Vector2(20.845, 20.845)
 texture = ExtResource("5_jgp58")
 
 [node name="Spawn" type="Marker2D" parent="System/Orbit/Earth" groups=["spawn"]]
-position = Vector2(590.043, -715.051)
+position = Vector2(0, -5100)
 rotation = 1.5708
 
 [node name="Sun" parent="System" instance=ExtResource("1_vorvx")]
 radius = 10.0
-gravity = 1.0
+gravity = 0.0
 color = Color(1, 0.996078, 0, 1)
 
 [node name="Players" type="Node2D" parent="."]
 
 [node name="LunarModule" parent="." instance=ExtResource("5_mr4de")]
-position = Vector2(-9939, -912)
+position = Vector2(-10511, -5180)
+
+[node name="LunarModule2" parent="." instance=ExtResource("5_mr4de")]
+position = Vector2(-9511, -5180)

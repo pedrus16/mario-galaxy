@@ -8,7 +8,8 @@ class_name Planet
 		radius = new_radius
 		if not is_inside_tree():
 			return
-		$Collision.shape.set_radius(new_radius * 100)
+		$Collision.shape.radius = new_radius * 100
+		$Gravity.gravity_point_unit_distance = new_radius * 100
 	get:
 		return radius
 		
@@ -16,6 +17,7 @@ class_name Planet
 @export_range(0, 10000) var gravity := 9.8:
 	set(new_gravity):
 		gravity = new_gravity
+		$Gravity.gravity = new_gravity * 100
 	get:
 		return gravity
 		
@@ -25,7 +27,7 @@ class_name Planet
 		influence_height = new_height
 		if not is_inside_tree():
 			return
-		$InfluenceArea/CollisionShape2D.shape.set_radius(radius * 100 + influence_height * 100)
+		$InfluenceArea/Collision.shape.set_radius(radius * 100 + influence_height * 100)
 	get:
 		return influence_height
 		
@@ -38,12 +40,14 @@ class_name Planet
 		
 func _refresh_children_proprerties():
 	$Collision.shape.set_radius(radius * 100)
-	$InfluenceArea/CollisionShape2D.shape.set_radius(radius * 100 + influence_height * 100)
+	$InfluenceArea/Collision.shape.set_radius(radius * 100 + influence_height * 100)
+	$Gravity.gravity = gravity * 100
+	$Gravity.gravity_point_unit_distance = radius * 100
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Collision.shape = CircleShape2D.new()
-	$InfluenceArea/CollisionShape2D.shape = CircleShape2D.new()
+	$InfluenceArea/Collision.shape = CircleShape2D.new()
 	_refresh_children_proprerties()
 	
 func _draw():
