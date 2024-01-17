@@ -76,6 +76,13 @@ right={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="solid object"
+2d_physics/layer_2="player"
+2d_physics/layer_3="interaction"
+2d_physics/layer_4="vehicle"
+
 [physics]
 
 2d/default_gravity=0.0
