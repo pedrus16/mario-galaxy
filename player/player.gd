@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 class_name Player
 
-const WALK_SPEED := 250.0
-const JUMP_VELOCITY := 400.0
+const WALK_SPEED := 512.0
+const JUMP_VELOCITY := 512.0
 
 var planets = []
 var current_planet = null
@@ -62,7 +62,7 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed("zoom_out") and camera.zoom.x > (1.0 / 128.0):
 		camera.zoom *= 0.5
-	if Input.is_action_just_pressed("zoom_in") and camera.zoom.x < 1:
+	if Input.is_action_just_pressed("zoom_in") and camera.zoom.x < 0.5:
 		camera.zoom *= 2	
 	
 	if is_on_floor() and input.direction:

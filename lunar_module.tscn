@@ -23,7 +23,7 @@ properties/3/replication_mode = 1
 absorbent = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ushy2"]
-size = Vector2(90, 111)
+size = Vector2(240, 296)
 
 [node name="LunarModule" type="Node2D"]
 script = ExtResource("3_an1cb")
@@ -42,39 +42,39 @@ script = ExtResource("1_qrv71")
 
 [node name="Collision" type="CollisionPolygon2D" parent="RigidBody2D"]
 show_behind_parent = true
-polygon = PackedVector2Array(-96, 96, -96, 87, -75, -15, -30, -42, 30, -42, 75, -15, 96, 87, 96, 96)
+polygon = PackedVector2Array(-256, 256, -256, 232, -200, -40, -80, -112, 80, -112, 200, -40, 256, 233, 256, 256)
 
 [node name="Module" type="Sprite2D" parent="RigidBody2D"]
 texture_filter = 1
-scale = Vector2(3, 3)
+scale = Vector2(8, 8)
 texture = ExtResource("1_bonml")
 
 [node name="MainThruster" type="Marker2D" parent="RigidBody2D"]
-position = Vector2(0, 87)
+position = Vector2(0, 232)
 
 [node name="LeftThrusters" type="Node2D" parent="RigidBody2D"]
-position = Vector2(-57, -6)
+position = Vector2(-152, -16)
 
 [node name="Up" type="Marker2D" parent="RigidBody2D/LeftThrusters"]
-position = Vector2(0, -18)
+position = Vector2(0, -48)
 
 [node name="Down" type="Marker2D" parent="RigidBody2D/LeftThrusters"]
-position = Vector2(0, 18)
+position = Vector2(0, 48)
 
 [node name="Left" type="Marker2D" parent="RigidBody2D/LeftThrusters"]
-position = Vector2(-18, 0)
+position = Vector2(-48, 0)
 
 [node name="RightThrusters" type="Node2D" parent="RigidBody2D"]
-position = Vector2(57, -6)
+position = Vector2(152, -16)
 
 [node name="Up" type="Marker2D" parent="RigidBody2D/RightThrusters"]
-position = Vector2(0, -18)
+position = Vector2(0, -48)
 
 [node name="Down" type="Marker2D" parent="RigidBody2D/RightThrusters"]
-position = Vector2(0, 18)
+position = Vector2(0, 48)
 
 [node name="Right" type="Marker2D" parent="RigidBody2D/RightThrusters"]
-position = Vector2(18, 0)
+position = Vector2(48, -1)
 
 [node name="EntryArea" type="Area2D" parent="RigidBody2D"]
 collision_layer = 4
@@ -83,7 +83,7 @@ monitoring = false
 script = ExtResource("4_f7bap")
 
 [node name="Collision" type="CollisionShape2D" parent="RigidBody2D/EntryArea"]
-position = Vector2(0, 16.5)
+position = Vector2(0, 44)
 shape = SubResource("RectangleShape2D_ushy2")
 
 [connection signal="player_interacted" from="RigidBody2D/EntryArea" to="." method="_on_entry_area_player_interacted"]

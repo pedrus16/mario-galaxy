@@ -36,7 +36,7 @@ properties/1/spawn = true
 properties/1/replication_mode = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1shqn"]
-radius = 24.0
+radius = 64.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xtjb8"]
 atlas = ExtResource("5_ejupf")
@@ -105,12 +105,12 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_58v80"]
-radius = 24.0
+radius = 64.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 z_index = 1
 collision_layer = 2
-floor_snap_length = 10.0
+floor_snap_length = 16.0
 script = ExtResource("1_4eg8x")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -122,6 +122,7 @@ script = ExtResource("2_hpqr1")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 ignore_rotation = false
+zoom = Vector2(0.25, 0.25)
 position_smoothing_speed = 20.0
 rotation_smoothing_speed = 8.0
 editor_draw_drag_margin = true
@@ -134,7 +135,7 @@ shape = SubResource("CircleShape2D_1shqn")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-scale = Vector2(3, 3)
+scale = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_nslk6")
 animation = &"walk"
 

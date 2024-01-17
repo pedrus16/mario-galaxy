@@ -47,7 +47,7 @@ scale = Vector2(3, 3)
 texture = ExtResource("5_jgp58")
 
 [node name="Spawn" type="Marker2D" parent="System/Orbit/Earth" groups=["spawn"]]
-position = Vector2(200, -1050)
+position = Vector2(590.043, -715.051)
 rotation = 1.5708
 
 [node name="Sun" parent="System" instance=ExtResource("1_vorvx")]
@@ -58,4 +58,4 @@ color = Color(1, 0.996078, 0, 1)
 [node name="Players" type="Node2D" parent="."]
 
 [node name="LunarModule" parent="." instance=ExtResource("5_mr4de")]
-position = Vector2(-10200, -1000)
+position = Vector2(-9939, -912)
