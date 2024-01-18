@@ -37,6 +37,8 @@ func exit():
 	player.set_physics_process(true)
 	player.visible = true
 	player.rotation = 0
+	player.position = $RigidBody2D.global_position
+	player.up_direction = Vector2.from_angle($RigidBody2D.global_rotation - PI / 2).normalized()
 	player.velocity = $RigidBody2D.linear_velocity
 	player.move_and_slide()
 	player.in_vehicle = false
