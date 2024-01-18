@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cfpdpqd1kba1u"]
+[gd_scene load_steps=8 format=3 uid="uid://cfpdpqd1kba1u"]
 
 [ext_resource type="Texture2D" uid="uid://cmgxrtilrxlun" path="res://assets/module.png" id="1_bonml"]
+[ext_resource type="Script" path="res://trajectory.gd" id="2_r7xcn"]
 [ext_resource type="Script" path="res://vehicle.gd" id="3_an1cb"]
 [ext_resource type="Script" path="res://interactable.gd" id="3_rys5s"]
 
@@ -43,46 +44,58 @@ continuous_cd = 2
 show_behind_parent = true
 polygon = PackedVector2Array(-256, 256, -256, 232, -200, -40, -80, -112, 80, -112, 200, -40, 256, 233, 256, 256)
 
-[node name="Module" type="Sprite2D" parent="RigidBody2D"]
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RigidBody2D"]
+remote_path = NodePath("../../Node2D")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(0, -96)
+
+[node name="Module" type="Sprite2D" parent="Node2D"]
 texture_filter = 1
 scale = Vector2(8, 8)
 texture = ExtResource("1_bonml")
 
-[node name="MainThruster" type="Marker2D" parent="RigidBody2D"]
+[node name="MainThruster" type="Marker2D" parent="Node2D"]
 position = Vector2(0, 232)
 
-[node name="LeftThrusters" type="Node2D" parent="RigidBody2D"]
+[node name="LeftThrusters" type="Node2D" parent="Node2D"]
 position = Vector2(-152, -16)
 
-[node name="Up" type="Marker2D" parent="RigidBody2D/LeftThrusters"]
+[node name="Up" type="Marker2D" parent="Node2D/LeftThrusters"]
 position = Vector2(0, -48)
 
-[node name="Down" type="Marker2D" parent="RigidBody2D/LeftThrusters"]
+[node name="Down" type="Marker2D" parent="Node2D/LeftThrusters"]
 position = Vector2(0, 48)
 
-[node name="Left" type="Marker2D" parent="RigidBody2D/LeftThrusters"]
+[node name="Left" type="Marker2D" parent="Node2D/LeftThrusters"]
 position = Vector2(-48, 0)
 
-[node name="RightThrusters" type="Node2D" parent="RigidBody2D"]
+[node name="RightThrusters" type="Node2D" parent="Node2D"]
 position = Vector2(152, -16)
 
-[node name="Up" type="Marker2D" parent="RigidBody2D/RightThrusters"]
+[node name="Up" type="Marker2D" parent="Node2D/RightThrusters"]
 position = Vector2(0, -48)
 
-[node name="Down" type="Marker2D" parent="RigidBody2D/RightThrusters"]
+[node name="Down" type="Marker2D" parent="Node2D/RightThrusters"]
 position = Vector2(0, 48)
 
-[node name="Right" type="Marker2D" parent="RigidBody2D/RightThrusters"]
+[node name="Right" type="Marker2D" parent="Node2D/RightThrusters"]
 position = Vector2(48, -1)
 
-[node name="EntryArea" type="Area2D" parent="RigidBody2D"]
+[node name="EntryArea" type="Area2D" parent="Node2D"]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 script = ExtResource("3_rys5s")
 
-[node name="Collision" type="CollisionShape2D" parent="RigidBody2D/EntryArea"]
+[node name="Collision" type="CollisionShape2D" parent="Node2D/EntryArea"]
 position = Vector2(0, 44)
 shape = SubResource("RectangleShape2D_ushy2")
 
-[connection signal="player_interacted" from="RigidBody2D/EntryArea" to="." method="_on_entry_area_player_interacted"]
+[node name="PlayerRemoteTransform2D2" type="RemoteTransform2D" parent="Node2D"]
+
+[node name="Trajectory" type="Node2D" parent="."]
+script = ExtResource("2_r7xcn")
+body_path = NodePath("../RigidBody2D")
+
+[connection signal="player_interacted" from="Node2D/EntryArea" to="." method="_on_entry_area_player_interacted"]

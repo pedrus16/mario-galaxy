@@ -7,7 +7,6 @@ const JUMP_VELOCITY := 512.0
 
 var planets = []
 var current_planet = null
-var points = []
 var in_vehicle := false
 
 # Set by the authority, synchronized on spawn.
@@ -28,31 +27,7 @@ func _ready():
 		camera.make_current()
 	planets = get_tree().get_nodes_in_group("planet")
 	
-func _draw():
-	if points.size() >= 2:
-		draw_polyline(points, Color(1, 0, 0, 1))
-	
 func _process(_delta):
-	# Trajectory computation
-	# TODO Refactor into a separate script (code also present in gravity.gd)
-	# TODO Implement Runge-Kutta method for better precision https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods
-	var _position = Vector2()
-	var _vel = get_real_velocity()
-	points = [_position]
-	var hit = false
-	for i in 200:
-		var _gravity = Vector2()
-		for planet in planets:
-			_gravity += planet.get_gravity_at(global_position + _position)
-			if (global_position + _position).distance_to(planet.global_position) <= planet.radius * 100:
-				hit = true
-		if hit:
-			break
-		_vel += _gravity * 1/8
-		_position += _vel * 1/8
-		points.push_front(_position)
-	queue_redraw()
-	
 	if input.interacting:
 		input.interacting = false
 		$InteractionArea.try_interacting(self)
