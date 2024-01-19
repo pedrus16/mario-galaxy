@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://btfdohv5uyusv"]
+[gd_scene load_steps=7 format=3 uid="uid://btfdohv5uyusv"]
 
 [ext_resource type="PackedScene" uid="uid://dw2qmdtemubuo" path="res://planet/planet.tscn" id="1_vorvx"]
 [ext_resource type="Script" path="res://world.gd" id="1_ypd81"]
 [ext_resource type="Material" uid="uid://6w4wttqfpegc" path="res://materials/grid.tres" id="2_eo6or"]
-[ext_resource type="Script" path="res://planet/orbit.gd" id="2_pn3b5"]
 [ext_resource type="Texture2D" uid="uid://5hrnibewxigh" path="res://assets/moon.png" id="5_jgp58"]
 [ext_resource type="PackedScene" uid="uid://cfpdpqd1kba1u" path="res://lunar_module.tscn" id="5_mr4de"]
 
@@ -24,42 +23,39 @@ z_as_relative = false
 texture_filter = 1
 texture_repeat = 2
 material = ExtResource("2_eo6or")
-scale = Vector2(50000, 50000)
+scale = Vector2(100000, 100000)
 mesh = SubResource("QuadMesh_unghq")
 
 [node name="System" type="Node2D" parent="."]
 
-[node name="Orbit" type="Node2D" parent="System"]
-script = ExtResource("2_pn3b5")
-radius = 10000.0
-speed = 0.0
-rotation_speed = 0.0
-
-[node name="Earth" parent="System/Orbit" instance=ExtResource("1_vorvx")]
-position = Vector2(-10000, 0)
+[node name="Spawn" type="Marker2D" parent="System" groups=["spawn"]]
+position = Vector2(0, -6299.55)
+rotation = 1.5708
 scale = Vector2(0.999928, 0.999928)
-radius = 50.0
-color = Color(1, 1, 1, 0)
 
-[node name="Planet" type="Sprite2D" parent="System/Orbit/Earth"]
+[node name="Earth" parent="System" instance=ExtResource("1_vorvx")]
+scale = Vector2(0.999928, 0.999928)
+radius = 60.0
+influence_height = 10.0
+color = Color(0.262745, 0.411765, 0.54902, 1)
+
+[node name="Planet" type="Sprite2D" parent="System/Earth"]
+visible = false
 texture_filter = 1
 position = Vector2(0, 1)
 scale = Vector2(20.845, 20.845)
 texture = ExtResource("5_jgp58")
 
-[node name="Spawn" type="Marker2D" parent="System/Orbit/Earth" groups=["spawn"]]
-position = Vector2(0, -5100)
-rotation = 1.5708
+[node name="Moon" parent="System" instance=ExtResource("1_vorvx")]
+position = Vector2(100000, 0)
+radius = 17.0
+gravity = 1.62
+color = Color(0.458824, 0.478431, 0.521569, 1)
 
-[node name="Sun" parent="System" instance=ExtResource("1_vorvx")]
-radius = 10.0
-gravity = 0.0
-color = Color(1, 0.996078, 0, 1)
-
-[node name="Players" type="Node2D" parent="."]
+[node name="Players" type="Node" parent="."]
 
 [node name="LunarModule" parent="." instance=ExtResource("5_mr4de")]
-position = Vector2(-10511, -5180)
+position = Vector2(-484, -6236)
 
 [node name="LunarModule2" parent="." instance=ExtResource("5_mr4de")]
-position = Vector2(-9525, -5204)
+position = Vector2(100000, -2000)

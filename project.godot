@@ -91,4 +91,5 @@ right={
 
 [rendering]
 
+anti_aliasing/quality/msaa_2d=3
 viewport/transparent_background=true

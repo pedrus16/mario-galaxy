@@ -27,20 +27,21 @@ func _ready():
 		camera.make_current()
 	planets = get_tree().get_nodes_in_group("planet")
 	
+func _input(event):
+	if event.is_action_pressed("zoom_out") and camera.zoom.x > (1.0 / 2048.0):
+		camera.zoom *= 0.5
+	if event.is_action_pressed("zoom_in") and camera.zoom.x < 0.5:
+		camera.zoom *= 2	
+	
 func _process(_delta):
 	if input.interacting:
 		input.interacting = false
 		$InteractionArea.try_interacting(self)
-	
-	if Input.is_action_just_pressed("zoom_out") and camera.zoom.x > (1.0 / 128.0):
-		camera.zoom *= 0.5
-	if Input.is_action_just_pressed("zoom_in") and camera.zoom.x < 0.5:
-		camera.zoom *= 2	
-	
+		
 	if is_on_floor() and input.direction:
 		$PlayerSprite.play("walk")
 	elif not is_on_floor():
-		$PlayerSprite.play("jump")		
+		$PlayerSprite.play("jump")
 	else:
 		$PlayerSprite.play("idle")
 	
@@ -56,6 +57,7 @@ func get_combined_gravity():
 	return gravity
 
 func _physics_process(delta):
+
 	# Gravity
 	var gravity = get_combined_gravity()
 	if not is_on_floor():
@@ -74,7 +76,7 @@ func _physics_process(delta):
 		velocity = move_dir * WALK_SPEED
 		
 	# Jump
-	if input.jumping:
+	if input.jumping && is_on_floor():
 		velocity += up_direction * JUMP_VELOCITY
 	
 	move_and_slide()
