@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://de8ncnqn1wt77"
-path="res://.godot/imported/cosmonaut-small.png-13d7275c22b5fc98370103711e4d1dfb.ctex"
+uid="uid://b3fux4p2srf4t"
+path="res://.godot/imported/fuselage_small.png-d6551dd32878db0428af8e33d94d7279.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/cosmonaut-small.png"
-dest_files=["res://.godot/imported/cosmonaut-small.png-13d7275c22b5fc98370103711e4d1dfb.ctex"]
+source_file="res://assets/fuselage_small.png"
+dest_files=["res://.godot/imported/fuselage_small.png-d6551dd32878db0428af8e33d94d7279.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cx7iyw4dsi3wc"
-path="res://.godot/imported/starry-bg.png-832f6d81925ed2c8579b7fc6e924ab7f.ctex"
+uid="uid://c13f0ehcitfe0"
+path="res://.godot/imported/thruster_solid_small.png-af945ab236b362ca879ee05585014038.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/starry-bg.png"
-dest_files=["res://.godot/imported/starry-bg.png-832f6d81925ed2c8579b7fc6e924ab7f.ctex"]
+source_file="res://assets/thruster_solid_small.png"
+dest_files=["res://.godot/imported/thruster_solid_small.png-af945ab236b362ca879ee05585014038.ctex"]
 
 [params]
 

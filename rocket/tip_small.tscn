@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctsipg6m63a4"]
+
+[ext_resource type="Texture2D" uid="uid://e0eo6van2g3x" path="res://assets/tip_small.png" id="1_clqi5"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m54vk"]
+
+[node name="TipSmall" type="Node2D"]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+collision_mask = 27
+physics_material_override = SubResource("PhysicsMaterial_m54vk")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D"]
+polygon = PackedVector2Array(-64, 64, -48, -8, -8, -64, 8, -64, 48, -8, 64, 64)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RigidBody2D"]
+remote_path = NodePath("../../Node2D")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+texture_filter = 1
+scale = Vector2(8, 8)
+texture = ExtResource("1_clqi5")
+
+[node name="AttachmentPoint" type="Marker2D" parent="Node2D"]
+position = Vector2(0, 64)
+scale = Vector2(0.125, 0.125)
+gizmo_extents = 256.0

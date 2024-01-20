@@ -20,10 +20,10 @@ properties/3/path = NodePath(".:constant_angular_velocity")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_x6xk1"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_3yw0y"]
 radius = 500.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_n18hd"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_8kavi"]
 radius = 1000.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cd5q4"]
@@ -38,7 +38,7 @@ script = ExtResource("1_0nmii")
 replication_config = SubResource("SceneReplicationConfig_44871")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_x6xk1")
+shape = SubResource("CircleShape2D_3yw0y")
 debug_color = Color(0.701961, 0.482353, 0.262745, 0.419608)
 
 [node name="InfluenceArea" type="Area2D" parent="."]
@@ -46,7 +46,7 @@ collision_mask = 2
 monitorable = false
 
 [node name="Collision" type="CollisionShape2D" parent="InfluenceArea"]
-shape = SubResource("CircleShape2D_n18hd")
+shape = SubResource("CircleShape2D_8kavi")
 debug_color = Color(0.611765, 0.431373, 0.827451, 0.0941176)
 
 [node name="Gravity" type="Area2D" parent="."]

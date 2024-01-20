@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cgc5cxqhsp066"]
+[gd_scene load_steps=21 format=3 uid="uid://cgc5cxqhsp066"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_4eg8x"]
 [ext_resource type="Script" path="res://player/player_input.gd" id="2_hpqr1"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://sphlofgn5xw6" path="res://assets/jump.png" id="4_xwyr8"]
 [ext_resource type="Texture2D" uid="uid://ck8ihs5byrqvi" path="res://assets/walk.png" id="5_ejupf"]
 [ext_resource type="Script" path="res://player/player_interaction.gd" id="6_36nbt"]
+[ext_resource type="Script" path="res://player/pickup.gd" id="7_t6yrp"]
 [ext_resource type="Script" path="res://trajectory.gd" id="7_xhu80"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1uu38"]
@@ -108,10 +109,15 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_58v80"]
 radius = 64.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gl4uw"]
+size = Vector2(128, 128)
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 z_index = 1
 collision_layer = 2
 floor_snap_length = 16.0
+platform_on_leave = 2
+platform_floor_layers = 4294967291
 script = ExtResource("1_4eg8x")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -121,35 +127,52 @@ replication_config = SubResource("SceneReplicationConfig_1uu38")
 replication_config = SubResource("SceneReplicationConfig_o8isl")
 script = ExtResource("2_hpqr1")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="."]
+show_behind_parent = true
+shape = SubResource("CircleShape2D_1shqn")
+
+[node name="Trajectory" type="Node2D" parent="."]
+script = ExtResource("7_xhu80")
+body_path = NodePath("..")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="Node2D"]
 ignore_rotation = false
 zoom = Vector2(0.25, 0.25)
 position_smoothing_speed = 20.0
 rotation_smoothing_speed = 8.0
 editor_draw_drag_margin = true
 
-[node name="Collision" type="CollisionShape2D" parent="."]
-show_behind_parent = true
-shape = SubResource("CircleShape2D_1shqn")
-
-[node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="Node2D"]
 texture_filter = 1
 scale = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_nslk6")
 animation = &"walk"
 
-[node name="InteractionArea" type="Area2D" parent="."]
+[node name="InteractionArea" type="Area2D" parent="Node2D"]
 collision_layer = 0
 collision_mask = 4
 monitorable = false
 script = ExtResource("6_36nbt")
 
-[node name="Collision" type="CollisionShape2D" parent="InteractionArea"]
+[node name="Collision" type="CollisionShape2D" parent="Node2D/InteractionArea"]
 shape = SubResource("CircleShape2D_58v80")
 
-[node name="Trajectory" type="Node2D" parent="."]
-script = ExtResource("7_xhu80")
-body_path = NodePath("..")
+[node name="PickupArea" type="Area2D" parent="Node2D"]
+collision_layer = 0
+monitorable = false
+script = ExtResource("7_t6yrp")
 
-[connection signal="area_entered" from="InteractionArea" to="InteractionArea" method="_on_area_entered"]
-[connection signal="area_exited" from="InteractionArea" to="InteractionArea" method="_on_area_exited"]
+[node name="Collision" type="CollisionShape2D" parent="Node2D/PickupArea"]
+position = Vector2(64, 0)
+shape = SubResource("RectangleShape2D_gl4uw")
+debug_color = Color(0.164706, 0.627451, 0.415686, 0.419608)
+
+[node name="PickupPoint" type="Marker2D" parent="Node2D"]
+position = Vector2(0, -128)
+gizmo_extents = 32.0
+
+[connection signal="area_entered" from="Node2D/InteractionArea" to="Node2D/InteractionArea" method="_on_area_entered"]
+[connection signal="area_exited" from="Node2D/InteractionArea" to="Node2D/InteractionArea" method="_on_area_exited"]
+[connection signal="body_picked_up" from="Node2D/PickupArea" to="." method="_on_pickup_area_body_picked_up"]

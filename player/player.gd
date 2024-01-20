@@ -6,8 +6,17 @@ const WALK_SPEED := 512.0
 const JUMP_VELOCITY := 512.0
 
 var planets = []
-var current_planet = null
+
+# Planet currently affecting the player's up_direction
+var current_planet: Planet = null
+
+# Is player in a vehicle
 var in_vehicle := false
+
+# Picked up item
+var item: RigidBody2D = null
+
+var zoom := 0.25
 
 # Set by the authority, synchronized on spawn.
 @export var player := 1 :
@@ -19,7 +28,7 @@ var in_vehicle := false
 # Player synchronized input.
 @onready var input = $PlayerInput
 
-@onready var camera := $Camera2D
+@onready var camera := $Node2D/Camera2D
 
 func _ready():
 	# Set the camera as current if we are this player.
@@ -28,25 +37,34 @@ func _ready():
 	planets = get_tree().get_nodes_in_group("planet")
 	
 func _input(event):
-	if event.is_action_pressed("zoom_out") and camera.zoom.x > (1.0 / 2048.0):
-		camera.zoom *= 0.5
-	if event.is_action_pressed("zoom_in") and camera.zoom.x < 0.5:
-		camera.zoom *= 2	
+	if event.is_action_pressed("zoom_out") and zoom > (1.0 / 2048.0):
+		zoom *= 0.5
+		var tween = get_tree().create_tween()
+		tween.tween_property(camera, "zoom", Vector2(zoom, zoom), 0.5).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	if event.is_action_pressed("zoom_in") and zoom < 0.5:
+		zoom *= 2
+		var tween = get_tree().create_tween()
+		tween.tween_property(camera, "zoom", Vector2(zoom, zoom), 0.5).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 	
 func _process(_delta):
 	if input.interacting:
 		input.interacting = false
-		$InteractionArea.try_interacting(self)
+		if item:
+			drop_item()
+		else:
+			if not $Node2D/InteractionArea.try_interacting(self):
+				$Node2D/PickupArea.try_pickup()
 		
 	if is_on_floor() and input.direction:
-		$PlayerSprite.play("walk")
+		$Node2D/PlayerSprite.play("walk")
 	elif not is_on_floor():
-		$PlayerSprite.play("jump")
+		$Node2D/PlayerSprite.play("jump")
 	else:
-		$PlayerSprite.play("idle")
+		$Node2D/PlayerSprite.play("idle")
 	
 	if is_on_floor() and input.direction != 0:
-		$PlayerSprite.flip_h = input.direction < 0
+		$Node2D/PlayerSprite.flip_h = input.direction < 0
+		$Node2D/PickupArea.scale.x = -1 if input.direction < 0 else 1
 		
 
 func get_combined_gravity():
@@ -57,7 +75,6 @@ func get_combined_gravity():
 	return gravity
 
 func _physics_process(delta):
-
 	# Gravity
 	var gravity = get_combined_gravity()
 	if not is_on_floor():
@@ -87,9 +104,7 @@ func _physics_process(delta):
 	# Reset jump state.
 	input.jumping = false
 		
-	$PlayerSprite.rotation = up_direction.angle() + PI / 2
-	camera.rotation = up_direction.angle() + PI / 2
-	$Collision.rotation = up_direction.angle() + PI / 2
+	$Node2D.rotation = up_direction.angle() + PI / 2
 	
 	# Push rigid bodies away
 	var push_force = 80.0
@@ -97,3 +112,22 @@ func _physics_process(delta):
 		var c = get_slide_collision(i)
 		if c.get_collider() is RigidBody2D:
 			c.get_collider().apply_central_impulse(-c.get_normal() * push_force)
+			
+	if item:
+		item.global_position = $Node2D/PickupPoint.global_position
+		item.rotation = up_direction.angle() + PI / 2
+		
+func drop_item():
+	item.freeze = false
+	var _angle = PI / 4 if $Node2D/PickupArea.scale.x > 0 else -PI / 4 
+	item.apply_central_impulse(get_real_velocity() + up_direction.rotated(_angle) * 400)
+	item.collision_layer = 0b0001
+	item = null
+
+func _on_pickup_area_body_picked_up(body: RigidBody2D):
+	item = body
+	item.freeze = true
+	item.collision_layer = 0b00010000
+	var tween = get_tree().create_tween()
+	tween.tween_property(item, "global_position", $Node2D/PickupPoint.global_position, 0.2).set_trans(Tween.TRANS_SPRING)
+	tween.parallel().tween_property(item, "rotation", up_direction.angle() + PI / 2, 0.2).set_trans(Tween.TRANS_SPRING)

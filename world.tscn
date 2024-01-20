@@ -1,10 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://btfdohv5uyusv"]
+[gd_scene load_steps=11 format=3 uid="uid://btfdohv5uyusv"]
 
 [ext_resource type="PackedScene" uid="uid://dw2qmdtemubuo" path="res://planet/planet.tscn" id="1_vorvx"]
 [ext_resource type="Script" path="res://world.gd" id="1_ypd81"]
 [ext_resource type="Material" uid="uid://6w4wttqfpegc" path="res://materials/grid.tres" id="2_eo6or"]
 [ext_resource type="Texture2D" uid="uid://5hrnibewxigh" path="res://assets/moon.png" id="5_jgp58"]
 [ext_resource type="PackedScene" uid="uid://cfpdpqd1kba1u" path="res://lunar_module.tscn" id="5_mr4de"]
+[ext_resource type="PackedScene" uid="uid://c1ix10h6kltxp" path="res://rocket/cockpit_small.tscn" id="6_svlq3"]
+[ext_resource type="PackedScene" uid="uid://cexpu7nsd6x0c" path="res://rocket/fuselage_small.tscn" id="7_f2i4i"]
+[ext_resource type="PackedScene" uid="uid://jqv3swb52a4" path="res://rocket/thruster_liquid_small.tscn" id="8_5nr0v"]
+[ext_resource type="PackedScene" uid="uid://ctsipg6m63a4" path="res://rocket/tip_small.tscn" id="9_pcmsn"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_unghq"]
 material = ExtResource("2_eo6or")
@@ -59,3 +63,15 @@ position = Vector2(-484, -6236)
 
 [node name="LunarModule2" parent="." instance=ExtResource("5_mr4de")]
 position = Vector2(100000, -2000)
+
+[node name="CockpitSmall" parent="." instance=ExtResource("6_svlq3")]
+position = Vector2(-1, -6589)
+
+[node name="TipSmall" parent="." instance=ExtResource("7_f2i4i")]
+position = Vector2(187, -6589)
+
+[node name="ThrusterLiquidSmall" parent="." instance=ExtResource("8_5nr0v")]
+position = Vector2(543, -6595)
+
+[node name="TipSmall2" parent="." instance=ExtResource("9_pcmsn")]
+position = Vector2(371, -6592)
