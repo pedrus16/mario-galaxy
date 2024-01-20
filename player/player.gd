@@ -110,8 +110,9 @@ func _physics_process(delta):
 	var push_force = 80.0
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
-		if c.get_collider() is RigidBody2D:
-			c.get_collider().apply_central_impulse(-c.get_normal() * push_force)
+		var collider = c.get_collider()
+		if collider is RigidBody2D:
+			collider.apply_central_impulse(-c.get_normal() * push_force)
 			
 	if item:
 		item.global_position = $Node2D/PickupPoint.global_position
@@ -120,8 +121,8 @@ func _physics_process(delta):
 func drop_item():
 	item.freeze = false
 	var _angle = PI / 4 if $Node2D/PickupArea.scale.x > 0 else -PI / 4 
-	item.apply_central_impulse(get_real_velocity() + up_direction.rotated(_angle) * 400)
-	item.collision_layer = 0b0001
+	item.apply_central_impulse(get_real_velocity() + up_direction.rotated(_angle) * item.mass * 400)
+	item.collision_layer = 0b00100000
 	item = null
 
 func _on_pickup_area_body_picked_up(body: RigidBody2D):

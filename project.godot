@@ -13,7 +13,7 @@ config_version=5
 config/name="Mario Galaxy"
 run/main_scene="res://multiplayer.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://assets/cosmonaut.png"
+config/icon="res://assets/module.png"
 
 [display]
 
@@ -83,6 +83,7 @@ right={
 2d_physics/layer_3="interaction"
 2d_physics/layer_4="vehicle"
 2d_physics/layer_5="picked up item"
+2d_physics/layer_6="props"
 
 [physics]
 

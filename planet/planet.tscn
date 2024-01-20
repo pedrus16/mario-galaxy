@@ -20,17 +20,17 @@ properties/3/path = NodePath(".:constant_angular_velocity")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_3yw0y"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_3ave0"]
 radius = 500.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_8kavi"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_6yp8a"]
 radius = 1000.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cd5q4"]
 radius = 1e+06
 
 [node name="Planet" type="AnimatableBody2D" groups=["planet"]]
-collision_mask = 11
+collision_mask = 0
 physics_material_override = SubResource("PhysicsMaterial_4g7ry")
 script = ExtResource("1_0nmii")
 
@@ -38,7 +38,7 @@ script = ExtResource("1_0nmii")
 replication_config = SubResource("SceneReplicationConfig_44871")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_3yw0y")
+shape = SubResource("CircleShape2D_3ave0")
 debug_color = Color(0.701961, 0.482353, 0.262745, 0.419608)
 
 [node name="InfluenceArea" type="Area2D" parent="."]
@@ -46,12 +46,12 @@ collision_mask = 2
 monitorable = false
 
 [node name="Collision" type="CollisionShape2D" parent="InfluenceArea"]
-shape = SubResource("CircleShape2D_8kavi")
+shape = SubResource("CircleShape2D_6yp8a")
 debug_color = Color(0.611765, 0.431373, 0.827451, 0.0941176)
 
 [node name="Gravity" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 11
+collision_mask = 43
 monitorable = false
 gravity_space_override = 1
 gravity_point = true

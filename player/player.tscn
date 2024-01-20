@@ -13,21 +13,15 @@
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath(".:rotation")
+properties/1/path = NodePath(".:up_direction")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath(".:up_direction")
+properties/2/path = NodePath(".:player")
 properties/2/spawn = true
-properties/2/replication_mode = 1
-properties/3/path = NodePath("PlayerSprite:rotation")
+properties/2/replication_mode = 0
+properties/3/path = NodePath(".:visible")
 properties/3/spawn = true
-properties/3/replication_mode = 1
-properties/4/path = NodePath(".:player")
-properties/4/spawn = true
-properties/4/replication_mode = 0
-properties/5/path = NodePath(".:visible")
-properties/5/spawn = true
-properties/5/replication_mode = 2
+properties/3/replication_mode = 2
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_o8isl"]
 properties/0/path = NodePath("PlayerInput:direction")
@@ -161,6 +155,7 @@ shape = SubResource("CircleShape2D_58v80")
 
 [node name="PickupArea" type="Area2D" parent="Node2D"]
 collision_layer = 0
+collision_mask = 32
 monitorable = false
 script = ExtResource("7_t6yrp")
 
