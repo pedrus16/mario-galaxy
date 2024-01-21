@@ -3,6 +3,7 @@ extends CharacterBody2D
 class_name Player
 
 const WALK_SPEED := 512.0
+const WALK_ACCELERATION := 2048.0
 const JUMP_VELOCITY := 512.0
 const AIR_BREAK := 32.0 # Rate to break speed mid air
 const AIR_CONTROL := 128.0 # Max velocity allowed to be added via direction
@@ -19,8 +20,6 @@ var in_vehicle := false
 var item: RigidBody2D = null
 
 var zoom := 0.25
-
-var initial_jump_velocity := Vector2()
 
 # Set by the authority, synchronized on spawn.
 @export var player := 1 :
@@ -93,14 +92,24 @@ func _physics_process(delta):
 	
 	# Vector representing the tangent line to the planet's surface
 	var right_direction = up_direction.rotated(PI / 2)
-		
+	var horizontal_velocity = velocity.dot(right_direction.normalized())
+	
 	# Walk
 	var move_dir = right_direction * input.direction
 	if is_on_floor():
-		velocity = move_dir * WALK_SPEED
+		if input.direction == 0 and abs(horizontal_velocity) > 0:
+			# Decelerate
+			if abs(horizontal_velocity) < WALK_ACCELERATION * delta:
+				velocity += right_direction * -horizontal_velocity
+			else:
+				velocity += right_direction * sign(horizontal_velocity) * -WALK_ACCELERATION * delta
+		elif abs(horizontal_velocity + input.direction * WALK_ACCELERATION * delta) < WALK_SPEED:
+			# Accelerate toward WALK_SPEED
+			velocity += move_dir * WALK_ACCELERATION * delta
+		else:
+			velocity = move_dir * WALK_SPEED
 	elif input.direction != 0:
 		# In-air control
-		var horizontal_velocity = velocity.dot(right_direction.normalized())
 		if abs(horizontal_velocity + input.direction * AIR_BREAK) < abs(horizontal_velocity):
 			var diff = min(AIR_BREAK, abs(horizontal_velocity) - abs(input.direction * AIR_BREAK))
 			velocity += move_dir * diff
@@ -110,7 +119,6 @@ func _physics_process(delta):
 	# Jump
 	if input.jumping && is_on_floor():
 		velocity += up_direction * JUMP_VELOCITY
-		initial_jump_velocity = velocity
 
 	move_and_slide()
 	
