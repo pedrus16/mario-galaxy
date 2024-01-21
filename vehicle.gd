@@ -23,9 +23,9 @@ func enter(_player: Player):
 		return
 
 	player = _player
-	$Node2D/PlayerRemoteTransform2D2.remote_path = _player.get_path()	
+	player.get_display_node().rotation = 0
+	$Node2D/PlayerRemoteTransform2D2.remote_path = player.get_path()
 	player.set_physics_process(false)
-	player.camera.rotation = 0
 	player.visible = false
 	player.in_vehicle = true
 

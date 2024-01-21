@@ -39,6 +39,9 @@ func _ready():
 		camera.make_current()
 	planets = get_tree().get_nodes_in_group("planet")
 	
+func _draw():
+	$Node2D/OnFloorDebug.visible = is_on_floor()
+	
 func _input(event):
 	if event.is_action_pressed("zoom_out") and zoom > (1.0 / 2048.0):
 		zoom *= 0.5
@@ -65,7 +68,7 @@ func _process(_delta):
 	else:
 		$Node2D/PlayerSprite.play("idle")
 	
-	if is_on_floor() and input.direction != 0:
+	if input.direction != 0:
 		$Node2D/PlayerSprite.flip_h = input.direction < 0
 		$Node2D/PickupArea.scale.x = -1 if input.direction < 0 else 1
 		
@@ -78,6 +81,8 @@ func get_combined_gravity():
 	return gravity
 
 func _physics_process(delta):
+	queue_redraw()
+	
 	# Gravity
 	var gravity = get_combined_gravity()
 	if not is_on_floor():
@@ -156,3 +161,6 @@ func _on_pickup_area_body_picked_up(body: RigidBody2D):
 	var tween = get_tree().create_tween()
 	tween.tween_property(item, "global_position", $Node2D/PickupPoint.global_position, 0.2).set_trans(Tween.TRANS_SPRING)
 	tween.parallel().tween_property(item, "rotation", up_direction.angle() + PI / 2, 0.2).set_trans(Tween.TRANS_SPRING)
+
+func get_display_node() -> Node2D:
+	return $Node2D
