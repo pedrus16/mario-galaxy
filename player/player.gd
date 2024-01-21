@@ -4,6 +4,8 @@ class_name Player
 
 const WALK_SPEED := 512.0
 const JUMP_VELOCITY := 512.0
+const AIR_BREAK := 32.0 # Rate to break speed mid air
+const AIR_CONTROL := 128.0 # Max velocity allowed to be added via direction
 
 var planets = []
 
@@ -17,6 +19,8 @@ var in_vehicle := false
 var item: RigidBody2D = null
 
 var zoom := 0.25
+
+var initial_jump_velocity := Vector2()
 
 # Set by the authority, synchronized on spawn.
 @export var player := 1 :
@@ -86,16 +90,28 @@ func _physics_process(delta):
 		var down_direction = global_position.direction_to(current_planet.get_gravity_center()).normalized()
 		if not down_direction.is_zero_approx():
 			up_direction = -down_direction
+	
+	# Vector representing the tangent line to the planet's surface
+	var right_direction = up_direction.rotated(PI / 2)
 		
 	# Walk
+	var move_dir = right_direction * input.direction
 	if is_on_floor():
-		var move_dir = up_direction.rotated(PI / 2) * input.direction
 		velocity = move_dir * WALK_SPEED
-		
+	elif input.direction != 0:
+		# In-air control
+		var horizontal_velocity = velocity.dot(right_direction.normalized())
+		if abs(horizontal_velocity + input.direction * AIR_BREAK) < abs(horizontal_velocity):
+			var diff = min(AIR_BREAK, abs(horizontal_velocity) - abs(input.direction * AIR_BREAK))
+			velocity += move_dir * diff
+		elif abs(horizontal_velocity + input.direction * AIR_BREAK) < AIR_CONTROL:
+			velocity += move_dir * AIR_BREAK
+	
 	# Jump
 	if input.jumping && is_on_floor():
 		velocity += up_direction * JUMP_VELOCITY
-	
+		initial_jump_velocity = velocity
+
 	move_and_slide()
 	
 	if not input.jumping:
@@ -104,7 +120,7 @@ func _physics_process(delta):
 	# Reset jump state.
 	input.jumping = false
 		
-	$Node2D.rotation = up_direction.angle() + PI / 2
+	$Node2D.rotation = right_direction.angle()
 	
 	# Push rigid bodies away
 	var push_force = 80.0
@@ -116,7 +132,7 @@ func _physics_process(delta):
 			
 	if item:
 		item.global_position = $Node2D/PickupPoint.global_position
-		item.rotation = up_direction.angle() + PI / 2
+		item.rotation = right_direction.angle()
 		
 func drop_item():
 	item.freeze = false

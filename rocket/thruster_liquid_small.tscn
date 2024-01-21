@@ -32,6 +32,7 @@ replication_config = SubResource("SceneReplicationConfig_wobi5")
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
 collision_layer = 32
 collision_mask = 43
+mass = 100.0
 physics_material_override = SubResource("PhysicsMaterial_m54vk")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D"]
